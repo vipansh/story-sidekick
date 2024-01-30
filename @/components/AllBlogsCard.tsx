@@ -3,13 +3,26 @@ import { Card, CardContent } from "./ui/card";
 import Link from "next/link";
 import Image from "next/image";
 import { formetDate } from "../lib/utils";
+import { useEffect, useState } from "react";
 
 type Props = {};
 
-const AllBlogsCard = async (props: Props) => {
-  const { data } = await getAllBlogs();
+const AllBlogsCard = ({}: Props) => {
+  const [data, setData] = useState([]);
 
-  //   console.log({ data, error });
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await getAllBlogs();
+        setData(result.data);
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  console.log({ data });
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
       {data?.map((blog) => (

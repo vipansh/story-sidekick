@@ -1,7 +1,6 @@
-
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Markdown from "react-markdown";
 import Back from "../../@/svg/Back";
 import { getBlogById } from "../../@/lib/supabase";
@@ -12,13 +11,24 @@ type Props = {
   };
 };
 
-export const runtime = "edge";
+const BlogPage = ({ params: { id } }: Props) => {
+  const [blogData, setBlogData] = useState<{ content: string; imagePath: string } | null>(null);
 
-const BlogPage = async ({ params: { id } }: Props) => {
-  const {
-    data: { content, imagePath },
-  } = await getBlogById(Number(id));
-  console.log({ content, imagePath });
+  useEffect(() => {
+    const fetchBlogData = async () => {
+      const {
+        data: { content, imagePath },
+      } = await getBlogById(Number(id));
+      console.log({ content, imagePath });
+      setBlogData({ content, imagePath });
+    };
+
+    fetchBlogData();
+  }, [id]);
+
+  if (!blogData) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <section className="mx-auto max-w-xl p-4 py-12">
@@ -30,15 +40,9 @@ const BlogPage = async ({ params: { id } }: Props) => {
           </div>
         </Link>
       </nav>{" "}
-      <Image
-        alt=""
-        src={imagePath}
-        width={800}
-        height={300}
-        layout="responsive"
-      />
+      <Image alt="" src={blogData.imagePath} width={800} height={300} layout="responsive" />
       <article className="prose">
-        <Markdown>{content}</Markdown>
+        <Markdown>{blogData.content}</Markdown>
       </article>
     </section>
   );
