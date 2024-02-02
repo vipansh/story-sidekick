@@ -3,7 +3,6 @@ import { decode } from "base64-arraybuffer";
 import { getServiceSupabase } from "../../../@/lib/supabase";
 import { ApplicationError } from "../../../@/lib/error";
 
-const url = "https://api.segmind.com/v1/sd1.5-disneyB";
 
 export const runtime = "edge";
 
