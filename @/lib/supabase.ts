@@ -30,6 +30,6 @@ export const getAllBlogs = async () => {
   const allBlogs = await supabaseClient
     .from("blogs")
     .select()
-    // .order("created_at", { ascending: false });
+    .order("created_at", { ascending: false });
   return allBlogs;
 };
