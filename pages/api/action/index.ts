@@ -8,7 +8,7 @@ export const runtime = "edge";
 
 const supabaseClient =getServiceSupabase()
 const apiKey = process.env.NEXT_PUBLIC_SIGMIND_API_KEY;
-const openAiKey = process.env.OPENAI_KEY;
+const openAiKey = process.env.NEXT_PUBLIC_OPENAI_KEY;
 const projectId = process.env.NEXT_PUBLIC_SUPABASE_URL;
 
 function validateInputs(prompt: string): void {
