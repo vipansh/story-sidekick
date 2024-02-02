@@ -31,7 +31,7 @@ const AllBlogsCard = ({}: Props) => {
             <Link href={`/blog/${blog.id}`} passHref>
               <Image
                 alt={blog.title}
-                src={blog.imagePath}
+                src={blog.imageUrl}
                 width={200}
                 height={200}
                 //     layout="responsive"

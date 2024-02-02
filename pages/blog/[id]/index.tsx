@@ -2,30 +2,30 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Markdown from "react-markdown";
-import Back from "../../@/svg/Back";
-import { getBlogById } from "../../@/lib/supabase";
+import Back from "../../../@/svg/Back";
+import { getBlogById } from "../../../@/lib/supabase";
+import { useParams } from "next/navigation";
 
-type Props = {
-  params: {
-    id: string;
-  };
-};
+const BlogPage = () => {
+  const param = useParams<{ id: string }>();
+  console.log(param);
+  const id = param?.id || 2;
 
-const BlogPage = ({ params: { id } }: Props) => {
-  const [blogData, setBlogData] = useState<{ content: string; imagePath: string } | null>(null);
+  const [blogData, setBlogData] = useState<{
+    content: string;
+    imageUrl: string;
+  } | null>(null);
 
   useEffect(() => {
     const fetchBlogData = async () => {
-      const {
-        data: { content, imagePath },
-      } = await getBlogById(Number(id));
-      console.log({ content, imagePath });
-      setBlogData({ content, imagePath });
+      const { data } = await getBlogById(Number(id));
+      setBlogData(data);
     };
 
     fetchBlogData();
   }, [id]);
 
+  console.log({ blogData });
   if (!blogData) {
     return <div>Loading...</div>;
   }
@@ -40,9 +40,15 @@ const BlogPage = ({ params: { id } }: Props) => {
           </div>
         </Link>
       </nav>{" "}
-      <Image alt="" src={blogData.imagePath} width={800} height={300} layout="responsive" />
+      <Image
+        alt=""
+        src={blogData?.imageUrl}
+        width={800}
+        height={300}
+        layout="responsive"
+      />
       <article className="prose">
-        <Markdown>{blogData.content}</Markdown>
+        <Markdown>{blogData?.content}</Markdown>
       </article>
     </section>
   );
