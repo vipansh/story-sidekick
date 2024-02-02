@@ -29,6 +29,7 @@
     "touch-cli": "^0.0.1"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240129.0",
     "@types/node": "20.11.11",
     "@types/react": "^18.2.48",
     "autoprefixer": "^10.4.17",
