@@ -1,12 +1,11 @@
-import OpenAI from "openai";
+// import OpenAI from "openai";
 import { decode } from "base64-arraybuffer";
 import { getServiceSupabase } from "../../../@/lib/supabase";
 import { ApplicationError } from "../../../@/lib/error";
 
-
 export const runtime = "edge";
 
-const supabaseClient =getServiceSupabase()
+const supabaseClient = getServiceSupabase();
 const apiKey = process.env.NEXT_PUBLIC_SIGMIND_API_KEY;
 const openAiKey = process.env.NEXT_PUBLIC_OPENAI_KEY;
 const projectId = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -21,20 +20,32 @@ function validateInputs(prompt: string): void {
   }
 }
 
-async function createOpenAICompletion(prompt: string): Promise<string> {
-  const openai = new OpenAI({ apiKey: openAiKey });
+console.log({ projectId });
 
-  const chatCompletion = await openai.chat.completions.create({
-    messages: [
-      {
-        role: "system",
-        content:
-          "You are an expert in SEO. Create a SEO-friendly blog post in markdown format including a compelling title. The blog post should be around 200 words.",
-      },
-      { role: "user", content: prompt },
-    ],
-    model: "gpt-3.5-turbo",
+async function createOpenAICompletion(prompt: string): Promise<string> {
+  const response = await fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${openAiKey}`,
+    },
+    body: JSON.stringify({
+      model: "gpt-3.5-turbo",
+      messages: [
+        {
+          role: "system",
+          content:
+            "You are an expert in SEO. Create a SEO-friendly blog post in markdown format including a compelling title. The blog post should be around 200 words.",
+        },
+        {
+          role: "user",
+          content: prompt,
+        },
+      ],
+    }),
   });
+
+  const chatCompletion: any = await response.json();
 
   return chatCompletion.choices[0].message?.content || "";
 }
@@ -156,15 +167,12 @@ export default async function handler(request: Request): Promise<Response> {
       imagePath
     );
 
-    return new Response(
-      JSON.stringify({blogId:blogData.id}),
-      {
-          status: 200,
-          headers: {
-              'Content-Type': 'application/json'
-          }
-      }
-  )
+    return new Response(JSON.stringify({ blogId: blogData.id }), {
+      status: 200,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   } catch (error: any) {
     console.error(error);
     return new Response(JSON.stringify({ error: error.message }), {
@@ -173,4 +181,3 @@ export default async function handler(request: Request): Promise<Response> {
     });
   }
 }
-
