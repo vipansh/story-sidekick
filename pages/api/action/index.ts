@@ -127,7 +127,7 @@ async function createBlogPostInSupabase(
 
   if (error) {
     console.log(error);
-    throw new Error("Failed to create blog post");
+    throw new Error(`Failed to create blog post: ${error.message}`);
   }
 
   return data[0];
