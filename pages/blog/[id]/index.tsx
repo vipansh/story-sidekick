@@ -5,6 +5,7 @@ import Markdown from "react-markdown";
 import Back from "../../../@/svg/Back";
 import { getBlogById } from "../../../@/lib/supabase";
 import { useParams } from "next/navigation";
+import { Separator } from "../../../@/components/ui/separator";
 
 export type DataType = {
   title: string;
@@ -69,6 +70,7 @@ const BlogPage = () => {
           items.data.map((item, index) => (
             <div key={index}>
               <Markdown>{item}</Markdown>
+              <Separator />
             </div>
           ))
         )}
