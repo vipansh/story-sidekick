@@ -25,17 +25,17 @@ console.log({ projectId });
 
 
 async function generateSegmindImage(prompt: string) {
-  const url = "https://api.segmind.com/v1/sd1.5-icbinp";
+  const url = "https://api.segmind.com/v1/ssd-1b";
   const data = {
-    prompt: `${prompt},hyper quality, intricate detail, masterpiece, photorealistic, ultra realistic, maximum detail, foreground focus, instagram, 8k, volumetric light, cinematic, octane render, uplight, no blur, 8k`,
-    negative_prompt: "((Semi-realistic, cgi, 3d, render, sketch, cartoon, drawing, anime:1.4)), text, close up, cropped, out of frame, worst quality, low quality, jpeg artifacts, ugly, duplicate",
-    scheduler: "dpmpp_2m",
-    num_inference_steps: 30,
-    guidance_scale: 7.5,
+    prompt: `${prompt},typography, dark fantasy, wildlife photography, vibrant, cinematic and on a black background instagram, 8k, volumetric light, cinematic, octane render, uplight, no blur, 8k`,
+    negative_prompt: "scary, cartoon, painting",
     samples: 1,
-    seed: 61150574526948,
-    img_width: 512,
-    img_height: 512,
+    scheduler: "UniPC",
+    num_inference_steps: 25,
+    guidance_scale: 9,
+    seed: 36446545871,
+    img_width: 1024,
+    img_height: 1024,
     base64: true,
   };
 
@@ -52,13 +52,14 @@ async function generateSegmindImage(prompt: string) {
     });
 
     if (!response.ok) {
+      console.log(response)
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
     const imageBlob = (await response.json()) as { image: string };
     return imageBlob.image;
   } catch (error) {
-    console.error("Error:", error);
-    throw new Error("Error generating image");
+    console.error("Error generating image: 💥", error);
+    throw new Error(`Error generating image:${error.message} 💥`);
   }
 }
 
@@ -84,7 +85,7 @@ async function createBlogPostInSupabase(
   prompt: string,
   blogContent: string,
   imagePath: string
-): Promise<any> {
+): Promise<{ id: number }> {
   const imageUrl = `${projectId}/storage/v1/object/public/images/${imagePath}`;
 
   const { data, error } = await supabaseClient
@@ -123,25 +124,25 @@ export default async function handler(request: Request): Promise<Response> {
 
     validateInputs(prompt);
 
-    // console.log("Generating image with Sigmind...");
-    // const imageBuffer = await generateSegmindImage(prompt);
-    // console.log("Image generated successfully.");
+    console.log("Generating image with Sigmind...");
+    const imageBuffer = await generateSegmindImage(prompt);
+    console.log("Image generated successfully.");
 
-    // console.log("Uploading image to Supabase...");
-    // const imagePath = await uploadImageToSupabase(imageBuffer);
-    // console.log("Image uploaded successfully. Path:", imagePath);
+    console.log("Uploading image to Supabase...");
+    const imagePath = await uploadImageToSupabase(imageBuffer);
+    console.log("Image uploaded successfully. Path:", imagePath);
 
     console.log("Generating blog content with OpenAI...");
     const blogContent = await createOpenAICompletion(prompt);
     console.log("Blog content generated successfully.", blogContent);
 
-    // const blogData = await createBlogPostInSupabase(
-    //   prompt,
-    //   blogContent,
-    //   "imagePath"
-    // );
+    const blogData = await createBlogPostInSupabase(
+      prompt,
+      JSON.stringify(blogContent.data),
+      imagePath
+    );
 
-    return new Response(JSON.stringify({ blogId: blogContent }), {
+    return new Response(JSON.stringify({ blogId: blogData.id }), {
       status: 200,
       headers: {
         "Content-Type": "application/json",

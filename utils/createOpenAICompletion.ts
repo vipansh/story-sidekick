@@ -86,7 +86,7 @@ async function fetchOpenAICompletion(prompt: string, lastResponse = null, lastEr
       // Validate the response
       console.log("Validate the response ✅", responseData)
       const parseResult: any = openAIResponseSchema.safeParse(JSON.parse(responseData.choices[0].message.content));
-      console.log({ emoji: "✨", parseResult, responseData: responseData.choices[0].message.content, })
+      console.log({ parseResult, responseData: responseData.choices[0].message.content, })
       if (parseResult.success) {
             console.log("🚀: got value in parse Result ")
             return parseResult;
@@ -97,7 +97,7 @@ async function fetchOpenAICompletion(prompt: string, lastResponse = null, lastEr
 }
 
 // The main function to create an OpenAI completion
-export async function createOpenAICompletion(prompt: string): Promise<string> {
+export async function createOpenAICompletion(prompt: string): Promise<{ data: string }> {
       try {
             return await fetchOpenAICompletion(prompt);
       } catch (error) {
