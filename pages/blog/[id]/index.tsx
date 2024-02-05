@@ -6,6 +6,8 @@ import Back from "../../../@/svg/Back";
 import { getBlogById } from "../../../@/lib/supabase";
 import { useParams } from "next/navigation";
 import { Separator } from "../../../@/components/ui/separator";
+import { AspectRatio } from "../../../@/components/ui/aspect-ratio";
+import { Card } from "../../../@/components/ui/card";
 
 export type DataType = {
   title: string;
@@ -45,7 +47,7 @@ const BlogPage = () => {
   }
 
   return (
-    <section className="mx-auto max-w-2xl lg:max-w-4xl p-6 md:p-8 py-12 bg-white shadow-lg rounded-lg">
+    <Card className="my-4 pb-16 mx-auto max-w-2xl lg:max-w-4xl p-6 md:p-8 py-12 bg-white shadow-lg rounded-lg">
       <nav className="mb-6">
         <Link href="/" passHref>
           <div className="flex items-center space-x-3 text-blue-600 hover:text-blue-800">
@@ -54,14 +56,24 @@ const BlogPage = () => {
           </div>
         </Link>
       </nav>
-      <Image
-        alt={blogData?.content?.title || "Blog Image"}
-        src={blogData?.imageUrl}
-        width={800}
-        height={300}
-        layout="responsive"
-        className="rounded-lg"
-      />
+      <AspectRatio ratio={16 / 9}>
+        <div
+          style={{
+            position: "relative",
+            width: "100%",
+            height: 0,
+            paddingBottom: "56.25%",
+          }}
+        >
+          <Image
+            alt={blogData?.content?.title || "Blog Image"}
+            src={blogData?.imageUrl}
+            layout="fill"
+            objectFit="cover"
+            className="rounded-md object-cover"
+          />
+        </div>
+      </AspectRatio>
       <h3 className="mt-5 mb-3 text-2xl font-semibold text-gray-800">
         {blogData?.content?.title}
       </h3>
@@ -70,12 +82,12 @@ const BlogPage = () => {
           items.data.map((item, index) => (
             <div key={index}>
               <Markdown>{item}</Markdown>
-              <Separator />
+              <Separator className="my-1" />
             </div>
           ))
         )}
       </article>
-    </section>
+    </Card>
   );
 };
 
