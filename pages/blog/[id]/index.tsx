@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -65,11 +66,9 @@ const BlogPage = () => {
             paddingBottom: "56.25%",
           }}
         >
-          <Image
+          <img
             alt={blogData?.content?.title || "Blog Image"}
             src={blogData?.imageUrl}
-            layout="fill"
-            objectFit="cover"
             className="rounded-md object-cover"
           />
         </div>

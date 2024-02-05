@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+
 import { getAllBlogs } from "../lib/supabase";
 import { Card, CardContent } from "./ui/card";
 import Link from "next/link";
@@ -27,15 +29,16 @@ const AllBlogsCard = ({}: Props) => {
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
       {data?.map((blog) => (
-        <Card key={blog.id} className="bg-white shadow-lg rounded-lg overflow-hidden">
+        <Card
+          key={blog.id}
+          className="bg-white shadow-lg rounded-lg overflow-hidden"
+        >
           <CardContent className="p-4">
             <Link href={`/blog/${blog.id}`} passHref>
               <AspectRatio ratio={4 / 3} className="relative">
-                <Image
+                <img
                   alt={blog.title}
                   src={blog.imageUrl}
-                  layout="fill"
-                  objectFit="cover"
                   className="rounded-lg"
                 />
               </AspectRatio>
