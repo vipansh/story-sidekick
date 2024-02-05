@@ -2,12 +2,12 @@
 import { decode } from "base64-arraybuffer";
 import { getServiceSupabase } from "../../../@/lib/supabase";
 import { ApplicationError } from "../../../@/lib/error";
+import { createOpenAICompletion } from "../../../utils/createOpenAICompletion";
 
 export const runtime = "edge";
 
 const supabaseClient = getServiceSupabase();
 const apiKey = process.env.NEXT_PUBLIC_SIGMIND_API_KEY;
-const openAiKey = process.env.NEXT_PUBLIC_OPENAI_KEY;
 const projectId = process.env.NEXT_PUBLIC_SUPABASE_URL;
 
 function validateInputs(prompt: string): void {
@@ -15,53 +15,27 @@ function validateInputs(prompt: string): void {
     throw new Error("Prompt is missing");
   }
 
-  if (!openAiKey || !projectId || !apiKey) {
+  if (!projectId || !apiKey) {
     throw new ApplicationError("One or more environment variables are missing");
   }
 }
 
 console.log({ projectId });
 
-async function createOpenAICompletion(prompt: string): Promise<string> {
-  const response = await fetch("https://api.openai.com/v1/chat/completions", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${openAiKey}`,
-    },
-    body: JSON.stringify({
-      model: "gpt-3.5-turbo",
-      messages: [
-        {
-          role: "system",
-          content:
-            "You are an expert in SEO. Create a SEO-friendly blog post in markdown format including a compelling title. The blog post should be around 200 words.",
-        },
-        {
-          role: "user",
-          content: prompt,
-        },
-      ],
-    }),
-  });
 
-  const chatCompletion: any = await response.json();
-
-  return chatCompletion.choices[0].message?.content || "";
-}
 
 async function generateSegmindImage(prompt: string) {
-  const url = "https://api.segmind.com/v1/sd1.5-cyberrealistic";
+  const url = "https://api.segmind.com/v1/sd1.5-icbinp";
   const data = {
-    prompt: prompt,
-    negative_prompt: "CyberRealistic_Negative",
+    prompt: `${prompt},hyper quality, intricate detail, masterpiece, photorealistic, ultra realistic, maximum detail, foreground focus, instagram, 8k, volumetric light, cinematic, octane render, uplight, no blur, 8k`,
+    negative_prompt: "((Semi-realistic, cgi, 3d, render, sketch, cartoon, drawing, anime:1.4)), text, close up, cropped, out of frame, worst quality, low quality, jpeg artifacts, ugly, duplicate",
     scheduler: "dpmpp_2m",
-    num_inference_steps: 25,
+    num_inference_steps: 30,
     guidance_scale: 7.5,
     samples: 1,
-    seed: 945216760,
+    seed: 61150574526948,
     img_width: 512,
-    img_height: 768,
+    img_height: 512,
     base64: true,
   };
 
@@ -149,25 +123,25 @@ export default async function handler(request: Request): Promise<Response> {
 
     validateInputs(prompt);
 
-    console.log("Generating image with Sigmind...");
-    const imageBuffer = await generateSegmindImage(prompt);
-    console.log("Image generated successfully.");
+    // console.log("Generating image with Sigmind...");
+    // const imageBuffer = await generateSegmindImage(prompt);
+    // console.log("Image generated successfully.");
 
-    console.log("Uploading image to Supabase...");
-    const imagePath = await uploadImageToSupabase(imageBuffer);
-    console.log("Image uploaded successfully. Path:", imagePath);
+    // console.log("Uploading image to Supabase...");
+    // const imagePath = await uploadImageToSupabase(imageBuffer);
+    // console.log("Image uploaded successfully. Path:", imagePath);
 
     console.log("Generating blog content with OpenAI...");
     const blogContent = await createOpenAICompletion(prompt);
-    console.log("Blog content generated successfully.");
+    console.log("Blog content generated successfully.", blogContent);
 
-    const blogData = await createBlogPostInSupabase(
-      prompt,
-      blogContent,
-      imagePath
-    );
+    // const blogData = await createBlogPostInSupabase(
+    //   prompt,
+    //   blogContent,
+    //   "imagePath"
+    // );
 
-    return new Response(JSON.stringify({ blogId: blogData.id }), {
+    return new Response(JSON.stringify({ blogId: blogContent }), {
       status: 200,
       headers: {
         "Content-Type": "application/json",
