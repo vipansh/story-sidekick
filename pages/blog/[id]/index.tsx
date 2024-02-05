@@ -12,14 +12,17 @@ const BlogPage = () => {
   const id = param?.id || 2;
 
   const [blogData, setBlogData] = useState<{
-    content: string;
+    content: { title: string; content: { data: string }[] };
     imageUrl: string;
   } | null>(null);
 
   useEffect(() => {
     const fetchBlogData = async () => {
       const { data } = await getBlogById(Number(id));
-      setBlogData(data);
+      setBlogData({
+        content: JSON.parse(data.content),
+        imageUrl: data.mageUrl,
+      });
     };
 
     fetchBlogData();
@@ -33,22 +36,24 @@ const BlogPage = () => {
   return (
     <section className="mx-auto max-w-xl p-4 py-12">
       <nav className="my-4">
-        <Link href="/">
+        <Link href="/" passHref>
           <div className="flex items-center space-x-2">
             <Back />
-            <p>Back</p>
+            <span>Back</span>
           </div>
         </Link>
-      </nav>{" "}
+      </nav>
       <Image
-        alt=""
-        src={blogData?.imageUrl}
+        alt={blogData.content.title || "Blog Image"}
+        src={blogData.imageUrl}
         width={800}
         height={300}
         layout="responsive"
       />
       <article className="prose">
-        <Markdown>{blogData?.content}</Markdown>
+        {blogData.content.content.map((item, index) => (
+          <Markdown key={index}>{item.data}</Markdown>
+        ))}
       </article>
     </section>
   );
