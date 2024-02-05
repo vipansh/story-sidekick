@@ -6,22 +6,32 @@ import Back from "../../../@/svg/Back";
 import { getBlogById } from "../../../@/lib/supabase";
 import { useParams } from "next/navigation";
 
+export type DataType = {
+  title: string;
+  content: Content[];
+};
+
+export type Content = {
+  data: string[];
+};
+
 const BlogPage = () => {
   const param = useParams<{ id: string }>();
   console.log(param);
   const id = param?.id || 2;
 
   const [blogData, setBlogData] = useState<{
-    content: { title: string; content: { data: string }[] };
+    content: DataType;
     imageUrl: string;
   } | null>(null);
 
   useEffect(() => {
     const fetchBlogData = async () => {
       const { data } = await getBlogById(Number(id));
+      console.log({ data });
       setBlogData({
-        content: JSON.parse(data.content),
-        imageUrl: data.mageUrl,
+        content: JSON.parse(data?.content || `{}`),
+        imageUrl: data?.imageUrl,
       });
     };
 
@@ -34,26 +44,34 @@ const BlogPage = () => {
   }
 
   return (
-    <section className="mx-auto max-w-xl p-4 py-12">
-      <nav className="my-4">
+    <section className="mx-auto max-w-2xl lg:max-w-4xl p-6 md:p-8 py-12 bg-white shadow-lg rounded-lg">
+      <nav className="mb-6">
         <Link href="/" passHref>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-3 text-blue-600 hover:text-blue-800">
             <Back />
-            <span>Back</span>
+            <span>Back to Home</span>
           </div>
         </Link>
       </nav>
       <Image
-        alt={blogData.content.title || "Blog Image"}
-        src={blogData.imageUrl}
+        alt={blogData?.content?.title || "Blog Image"}
+        src={blogData?.imageUrl}
         width={800}
         height={300}
         layout="responsive"
+        className="rounded-lg"
       />
-      <article className="prose">
-        {blogData.content.content.map((item, index) => (
-          <Markdown key={index}>{item.data}</Markdown>
-        ))}
+      <h3 className="mt-5 mb-3 text-2xl font-semibold text-gray-800">
+        {blogData?.content?.title}
+      </h3>
+      <article className="prose lg:prose-lg max-w-none">
+        {blogData?.content?.content?.map((items, index) =>
+          items.data.map((item, index) => (
+            <div key={index}>
+              <Markdown>{item}</Markdown>
+            </div>
+          ))
+        )}
       </article>
     </section>
   );
