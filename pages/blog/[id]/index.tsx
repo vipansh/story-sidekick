@@ -58,20 +58,11 @@ const BlogPage = () => {
         </Link>
       </nav>
       <AspectRatio ratio={16 / 9}>
-        <div
-          style={{
-            position: "relative",
-            width: "100%",
-            height: 0,
-            paddingBottom: "56.25%",
-          }}
-        >
-          <img
-            alt={blogData?.content?.title || "Blog Image"}
-            src={blogData?.imageUrl}
-            className="rounded-md object-cover"
-          />
-        </div>
+        <img
+          alt={blogData?.content?.title || "Blog Image"}
+          src={blogData?.imageUrl}
+          className="rounded-md object-cover w-full h-full"
+        />
       </AspectRatio>
       <h3 className="mt-5 mb-3 text-2xl font-semibold text-gray-800">
         {blogData?.content?.title}

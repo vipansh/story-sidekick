@@ -35,11 +35,11 @@ const AllBlogsCard = ({}: Props) => {
         >
           <CardContent className="p-4">
             <Link href={`/blog/${blog.id}`} passHref>
-              <AspectRatio ratio={4 / 3} className="relative">
+              <AspectRatio ratio={1} className="relative">
                 <img
                   alt={blog.title}
                   src={blog.imageUrl}
-                  className="rounded-lg"
+                  className="rounded-lg w-full h-full"
                 />
               </AspectRatio>
               <div className="mt-2">
