@@ -56,7 +56,7 @@ const AllBlogsCard = ({}: Props) => {
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-7xl mx-auto">
       {data.map((blog) => (
         <Link href={`/blog/${blog.id}`} passHref key={blog.id}>
-          <div className=" row-span-1 rounded-xl group/bento bg-white border border-transparent space-y-4 flex flex-col p-4 tracking-tight text-slate-100/50 w-full h-full">
+          <div className=" row-span-1 rounded-xl group/bento bg-white border border-transparent space-y-4 flex flex-col p-4 tracking-tight text-slate-100/50 w-full h-full shadow-2xl">
             <h3 className="!pb-2 !m-0 font-bold text-base text-slate-800">
               {blog.title}
             </h3>
