@@ -12,7 +12,7 @@ type Props = {};
 const AllBlogsCard = ({}: Props) => {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
-
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -21,10 +21,29 @@ const AllBlogsCard = ({}: Props) => {
       } catch (error) {
         console.error("Failed to fetch data:", error);
         setError(error);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchData();
   }, []);
+
+  if (isLoading) {
+    const Skeleton = () => (
+      <div className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl bg-gradient-to-br from-neutral-200 dark:from-neutral-900 dark:to-neutral-800 to-neutral-100"></div>
+    );
+    return (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-7xl mx-auto">
+        <Skeleton />
+        <Skeleton />
+        <Skeleton />
+        <Skeleton />
+        <Skeleton />
+        <Skeleton />
+        <Skeleton />
+      </div>
+    );
+  }
 
   if (error) {
     return <div>Failed to load blogs. Please try again later.</div>;

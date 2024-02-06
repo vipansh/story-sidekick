@@ -50,7 +50,7 @@ export const FloatingButton = ({ className }: { className?: string }) => {
           duration: 0.2,
         }}
         className={cn(
-          "flex max-w-fit fixed bottom-5   right-10 mx-auto border border-transparent ",
+          "flex max-w-fit fixed bottom-5 right-10 mx-auto border border-transparent z-30",
           className
         )}
       >
