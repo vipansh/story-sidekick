@@ -91,7 +91,7 @@ async function fetchOpenAICompletion(prompt: string, lastResponse = null, lastEr
             console.log("🚀: got value in parse Result ")
             return parseResult;
       } else {
-            console.error("Validation failed, retrying with error details:", "❌", parseResult.error);
+            console.error("❌", "Validation failed, retrying with error details:", parseResult.error);
             return fetchOpenAICompletion(prompt, responseData.choices[0].message.content, JSON.stringify(parseResult.error));
       }
 }
