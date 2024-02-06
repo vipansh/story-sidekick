@@ -7,6 +7,7 @@ import { Separator } from "./ui/separator";
 import BlogImage from "./BlogImage";
 import { CardContent } from "./ui/card";
 import { FloatingButton } from "./ui/floating-button";
+import { LayoutComponent } from "./ui/layout-comp";
 
 const BlogPage: React.FC = () => {
   const blogData = useBlogData();
@@ -23,11 +24,12 @@ const BlogPage: React.FC = () => {
         <h3 className="mt-5 mb-3 text-2xl font-semibold text-gray-800">
           {blogData.content.title}
         </h3>
-
-        <BlogImage
-          imageUrl={blogData.imageUrl}
-          title={blogData.content.title}
-        />
+        <LayoutComponent layoutId={blogData.content.title}>
+          <BlogImage
+            imageUrl={blogData.imageUrl}
+            title={blogData.content.title}
+          />
+        </LayoutComponent>
 
         <article className="prose lg:prose-lg max-w-none">
           {blogData?.content?.content?.map((section, index) => (
