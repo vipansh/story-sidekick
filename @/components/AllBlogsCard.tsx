@@ -7,6 +7,7 @@ import Image from "next/image";
 import { formetDate } from "../lib/utils";
 import { useEffect, useState } from "react";
 import { AspectRatio } from "./ui/aspect-ratio";
+import { PinContainer } from "./ui/3d-pin";
 
 type Props = {};
 
@@ -29,26 +30,29 @@ const AllBlogsCard = ({}: Props) => {
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
       {data?.map((blog) => (
-        <Card
+        <PinContainer
+          title={blog.title}
+          href={`/blog/${blog.id}`}
           key={blog.id}
-          className="bg-white shadow-lg rounded-lg overflow-hidden"
         >
-          <CardContent className="p-4">
-            <Link href={`/blog/${blog.id}`} passHref>
-              <AspectRatio ratio={1} className="relative">
-                <img
-                  alt={blog.title}
-                  src={blog.imageUrl}
-                  className="rounded-lg w-full h-full"
-                />
-              </AspectRatio>
-              <div className="mt-2">
-                <h4 className="text-xl font-semibold">{blog.title}</h4>
-                <p className="text-gray-500">{formetDate(blog.created_at)}</p>
-              </div>
-            </Link>
-          </CardContent>
-        </Card>
+          <Card className="bg-white shadow-lg rounded-lg overflow-hidden">
+            <CardContent className="p-4">
+              <Link href={`/blog/${blog.id}`} passHref>
+                <AspectRatio ratio={1} className="relative">
+                  <img
+                    alt={blog.title}
+                    src={blog.imageUrl}
+                    className="rounded-lg w-full h-full"
+                  />
+                </AspectRatio>
+                <div className="mt-2">
+                  <h4 className="text-xl font-semibold">{blog.title}</h4>
+                  <p className="text-gray-500">{formetDate(blog.created_at)}</p>
+                </div>
+              </Link>
+            </CardContent>
+          </Card>
+        </PinContainer>
       ))}
     </div>
   );
