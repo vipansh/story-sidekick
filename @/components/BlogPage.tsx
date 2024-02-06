@@ -6,6 +6,7 @@ import useBlogData from "../hooks/useBlogData";
 import { Separator } from "./ui/separator";
 import BlogImage from "./BlogImage";
 import { CardContent } from "./ui/card";
+import { FloatingButton } from "./ui/floating-button";
 
 const BlogPage: React.FC = () => {
   const blogData = useBlogData();
@@ -17,6 +18,7 @@ const BlogPage: React.FC = () => {
   return (
     <BlogCard>
       <BlogHeader />
+      <FloatingButton />
       <div className=" mx-auto antialiased pt-4 relative">
         <h3 className="mt-5 mb-3 text-2xl font-semibold text-gray-800">
           {blogData.content.title}
