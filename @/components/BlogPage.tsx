@@ -20,10 +20,10 @@ const BlogPage: React.FC = () => {
     <BlogCard>
       <BlogHeader />
       <FloatingButton />
-      <div className=" mx-auto antialiased pt-4 relative">
-        <h3 className="mt-5 mb-3 text-2xl font-semibold text-gray-800">
+      <div className=" mx-auto antialiased  relative">
+        <h1 className="mb-5 my-3 text-5xl font-semibold text-gray-800 ">
           {blogData.content.title}
-        </h3>
+        </h1>
         <LayoutComponent layoutId={blogData.content.title}>
           <BlogImage
             imageUrl={blogData.imageUrl}
@@ -31,7 +31,7 @@ const BlogPage: React.FC = () => {
           />
         </LayoutComponent>
 
-        <article className="prose lg:prose-lg max-w-none">
+        <article className="prose lg:prose-lg max-w-none mt-10">
           {blogData?.content?.content?.map((section, index) => (
             <div key={index}>
               {section.data.map((item, itemIndex) => (
