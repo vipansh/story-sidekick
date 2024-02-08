@@ -2,7 +2,7 @@
 import { decode } from "base64-arraybuffer";
 import { getServiceSupabase } from "../../../@/lib/supabase";
 import { ApplicationError } from "../../../@/lib/error";
-import { createOpenAICompletion } from "../../../utils/createOpenAICompletion";
+import { createOpenAICompletion } from "../../../@/lib/requestToOpenAi/createBlog/createOpenAICompletion";
 
 export const runtime = "edge";
 
