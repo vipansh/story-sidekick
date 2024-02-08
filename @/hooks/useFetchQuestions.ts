@@ -1,12 +1,16 @@
 
 import { useState } from 'react';
 import { toast } from 'sonner';
+import { QuestionStructure, exampleQuestionStructure } from '../lib/requestToOpenAi/requestForQuestions/standerdRes';
 
 // Define the hook
 const useFetchQuestions = () => {
       const [loading, setLoading] = useState(false);
 
       const fetchQuestions = async (prompt: string) => {
+
+            return exampleQuestionStructure
+
             if (!prompt) {
                   toast.error("Please enter a topic name.");
                   return;
@@ -26,7 +30,7 @@ const useFetchQuestions = () => {
                   }
                   const data = await response.json();
                   console.log({ data, test: "test" });
-                  return data
+                  return data as QuestionStructure
             } catch (error) {
                   toast.error(
                         "An error occurred while processing your request. Please try again."

@@ -14,17 +14,21 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { cn } from "../lib/utils";
 import useFetchQuestions from "../hooks/useFetchQuestions";
+import { QuestionType } from "../lib/requestToOpenAi/requestForQuestions/standerdRes";
+import { Dialog, DialogTrigger } from "./ui/dialog";
+import QuestionModal from "./QuestionModal";
 
 const Form = () => {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
   const promptRef = useRef<HTMLInputElement>(null);
-
+  const [questionsList, setQuestionsList] = useState<QuestionType[]>([]);
   const { fetchQuestions } = useFetchQuestions();
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const questions = fetchQuestions(promptRef.current.value);
     console.log({ questions });
+    setQuestionsList(Object.values(questions));
   };
 
   return (
@@ -51,9 +55,14 @@ const Form = () => {
             </div>
           </CardContent>
           <CardFooter className="flex justify-between">
-            <Button className={cn("w-full")} type="submit">
-              Generate Blog Post
-            </Button>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button className={cn("w-full")} type="submit">
+                  Generate Blog Post
+                </Button>
+              </DialogTrigger>
+              <QuestionModal questionsList={questionsList} />
+            </Dialog>
           </CardFooter>
         </form>
       </Card>
