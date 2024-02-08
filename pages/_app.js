@@ -1,7 +1,12 @@
-import '../styles/globals.css'
+import { Toaster } from "sonner";
+import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+  return (
+    <>
+      <Toaster />
+      <Component {...pageProps} />
+    </>
+  );
 }
-
-export default MyApp
+export default MyApp;
