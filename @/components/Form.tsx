@@ -58,7 +58,7 @@ const Form = () => {
     }
   };
 
-  const prompt = `${promptRef.current.value},
+  const prompt = `${promptRef?.current?.value},
   Extra inforamtion----------
   ${JSON.stringify(selectedOptions)}
   `;
