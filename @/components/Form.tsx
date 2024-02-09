@@ -1,5 +1,9 @@
 import { useState, useRef, FormEvent } from "react";
-import { Button } from "./ui/button";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { cn } from "../lib/utils";
+import useFetchQuestions from "../hooks/useFetchQuestions";
+import { QuestionType } from "../lib/requestToOpenAi/requestForQuestions/standerdRes";
 import {
   Card,
   CardContent,
@@ -8,29 +12,45 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/card";
+import QuestionModal from "./questionnaire/QuestionModal";
+import LoaderModalAnimation from "./LoaderModalAnimation";
+import { Dialog } from "./ui/dialog";
+import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-import { toast } from "sonner";
-import { useRouter } from "next/navigation";
-import { cn } from "../lib/utils";
-import useFetchQuestions from "../hooks/useFetchQuestions";
-import { QuestionType } from "../lib/requestToOpenAi/requestForQuestions/standerdRes";
-import { Dialog, DialogTrigger } from "./ui/dialog";
-import QuestionModal from "./questionnaire/QuestionModal";
 
 const Form = () => {
   const router = useRouter();
-  const [loading, setLoading] = useState<boolean>(false);
-  const [openModal, setOpenModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [dialogState, setDialogState] = useState({
+    questionModal: false,
+    loaderModal: false,
+  });
   const promptRef = useRef<HTMLInputElement>(null);
   const [questionsList, setQuestionsList] = useState<QuestionType[]>([]);
   const { fetchQuestions } = useFetchQuestions();
+
+  const openDialog = (dialogName: keyof typeof dialogState) => {
+    setDialogState((prev) => ({ ...prev, [dialogName]: true }));
+  };
+
+  const closeDialog = (dialogName: keyof typeof dialogState) => {
+    setDialogState((prev) => ({ ...prev, [dialogName]: false }));
+  };
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const questions = await fetchQuestions(promptRef.current.value);
-    console.log({ questions });
-    setQuestionsList(Object.values(questions));
-    setOpenModal(true);
+    setLoading(true);
+    try {
+      const questions = await fetchQuestions(promptRef.current?.value || "");
+      setQuestionsList(Object.values(questions));
+      openDialog("questionModal");
+    } catch (error) {
+      console.error("Fetching questions failed", error);
+      toast.error("An error occurred while generating questions.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -44,27 +64,35 @@ const Form = () => {
         </CardHeader>
         <form onSubmit={handleSubmit}>
           <CardContent>
-            <div className="grid w-full items-center gap-4">
-              <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="prompt">Enter your desired blog topic</Label>
-                <Input
-                  ref={promptRef}
-                  name="prompt"
-                  id="prompt"
-                  placeholder="Type the blog topic here"
-                />
-              </div>
-            </div>
+            <Label htmlFor="prompt">Enter your desired blog topic</Label>
+            <Input
+              ref={promptRef}
+              name="prompt"
+              id="prompt"
+              placeholder="Type the blog topic here"
+            />
           </CardContent>
           <CardFooter className="flex justify-between">
-            <Button className={cn("w-full")} type="submit">
-              Generate Blog Post
+            <Button className={cn("w-full")} type="submit" disabled={loading}>
+              {loading ? "Generating..." : "Generate Blog Post"}
             </Button>
-            <Dialog open={openModal} onOpenChange={setOpenModal}>
-              <QuestionModal questionsList={questionsList} />
-            </Dialog>
           </CardFooter>
         </form>
+        {dialogState.questionModal && (
+          <Dialog
+            open={dialogState.questionModal}
+            onOpenChange={() => closeDialog("questionModal")}
+          >
+            <QuestionModal
+              questionsList={questionsList}
+              primaryAction={() => {
+                closeDialog("questionModal");
+                openDialog("loaderModal");
+              }}
+            />
+          </Dialog>
+        )}
+        {dialogState.loaderModal && <LoaderModalAnimation />}
       </Card>
     </section>
   );

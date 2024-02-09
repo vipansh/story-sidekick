@@ -13,9 +13,10 @@ import { Separator } from "../ui/separator";
 
 type Props = {
   questionsList: QuestionType[];
+  primaryAction: () => void;
 };
 
-const QuestionModal: React.FC<Props> = ({ questionsList }) => {
+const QuestionModal: React.FC<Props> = ({ questionsList, primaryAction }) => {
   const [selectedOptions, setSelectedOptions] = useState<
     Record<string, string[]>
   >({});
@@ -48,11 +49,13 @@ const QuestionModal: React.FC<Props> = ({ questionsList }) => {
             />
           ))}
         </div>
-        <Separator  orientation="vertical"/>
+        <Separator orientation="vertical" />
         <div className="flex-1">log in to unlock these feature</div>
       </div>
       <DialogFooter className="py-4">
-        <Button type="submit">Generate</Button>
+        <Button type="submit" onClick={primaryAction}>
+          Generate
+        </Button>
       </DialogFooter>
     </DialogContent>
   );
