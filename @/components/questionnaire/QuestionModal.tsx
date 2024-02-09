@@ -14,15 +14,24 @@ import { Separator } from "../ui/separator";
 type Props = {
   questionsList: QuestionType[];
   primaryAction: () => void;
+  selectedOptions: Record<string, string[]>;
+  setSelectedOptions: React.Dispatch<
+    React.SetStateAction<Record<string, string[]>>
+  >;
 };
 
-const QuestionModal: React.FC<Props> = ({ questionsList, primaryAction }) => {
-  const [selectedOptions, setSelectedOptions] = useState<
-    Record<string, string[]>
-  >({});
-
+const QuestionModal: React.FC<Props> = ({
+  questionsList,
+  primaryAction,
+  setSelectedOptions,
+  selectedOptions,
+}) => {
   const handleQuestionClick = (questionId: string, options: string[]) => {
     setSelectedOptions((prev) => ({ ...prev, [questionId]: options }));
+  };
+
+  const requestBlog = () => {
+    primaryAction();
   };
 
   return (
@@ -53,7 +62,7 @@ const QuestionModal: React.FC<Props> = ({ questionsList, primaryAction }) => {
         <div className="flex-1">log in to unlock these feature</div>
       </div>
       <DialogFooter className="py-4">
-        <Button type="submit" onClick={primaryAction}>
+        <Button type="submit" onClick={requestBlog}>
           Generate
         </Button>
       </DialogFooter>

@@ -1,6 +1,6 @@
 import React from "react";
 
-const LoaderModalAnimation = () => {
+const LoaderModalAnimation = ({ message }: { message: string }) => {
   return (
     <div className="fixed inset-0 bg-opacity-75 bg-white dark:bg-gray-900 z-50 flex justify-center items-center">
       <div className="flex items-center flex-col justify-center space-y-3">
@@ -21,11 +21,8 @@ const LoaderModalAnimation = () => {
           />
         </svg>
         <h3 className="text-lg font-medium text-gray-900 dark:text-white">
-          Generating your blog...
+          {message}
         </h3>
-        <p className="text-sm text-gray-600 dark:text-gray-300">
-          This usually takes around 30 seconds.
-        </p>
       </div>
     </div>
   );

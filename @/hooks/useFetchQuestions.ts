@@ -9,7 +9,7 @@ const useFetchQuestions = () => {
 
       const fetchQuestions = async (prompt: string) => {
 
-            return exampleQuestionStructure
+            // return exampleQuestionStructure
 
             if (!prompt) {
                   toast.error("Please enter a topic name.");

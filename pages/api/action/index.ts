@@ -138,7 +138,7 @@ export default async function handler(request: Request): Promise<Response> {
 
     const blogData = await createBlogPostInSupabase(
       prompt,
-      JSON.stringify(blogContent.data),
+      JSON.stringify(blogContent),
       imagePath
     );
 

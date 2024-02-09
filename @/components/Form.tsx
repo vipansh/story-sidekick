@@ -18,17 +18,22 @@ import { Dialog } from "./ui/dialog";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
+import useCreateBlog from "../hooks/useCreateBlog";
 
 const Form = () => {
-  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [dialogState, setDialogState] = useState({
     questionModal: false,
-    loaderModal: false,
   });
+
   const promptRef = useRef<HTMLInputElement>(null);
   const [questionsList, setQuestionsList] = useState<QuestionType[]>([]);
   const { fetchQuestions } = useFetchQuestions();
+  const { action, loading: loadingCreateBlog } = useCreateBlog();
+
+  const [selectedOptions, setSelectedOptions] = useState<
+    Record<string, string[]>
+  >({});
 
   const openDialog = (dialogName: keyof typeof dialogState) => {
     setDialogState((prev) => ({ ...prev, [dialogName]: true }));
@@ -53,6 +58,10 @@ const Form = () => {
     }
   };
 
+  const prompt = `${promptRef.current.value},
+  Extra inforamtion----------
+  ${JSON.stringify(selectedOptions)}
+  `;
   return (
     <section className="mx-auto max-w-lg">
       <Card className="border-0 shadow-none">
@@ -87,12 +96,17 @@ const Form = () => {
               questionsList={questionsList}
               primaryAction={() => {
                 closeDialog("questionModal");
-                openDialog("loaderModal");
+                action(prompt);
               }}
+              selectedOptions={selectedOptions}
+              setSelectedOptions={setSelectedOptions}
             />
           </Dialog>
         )}
-        {dialogState.loaderModal && <LoaderModalAnimation />}
+        {loading && <LoaderModalAnimation message="Loading..." />}
+        {loadingCreateBlog && (
+          <LoaderModalAnimation message="Generating your blog post. This usually takes 30 seconds." />
+        )}
       </Card>
     </section>
   );
