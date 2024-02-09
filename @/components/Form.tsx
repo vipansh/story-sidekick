@@ -16,19 +16,21 @@ import { cn } from "../lib/utils";
 import useFetchQuestions from "../hooks/useFetchQuestions";
 import { QuestionType } from "../lib/requestToOpenAi/requestForQuestions/standerdRes";
 import { Dialog, DialogTrigger } from "./ui/dialog";
-import QuestionModal from "./QuestionModal";
+import QuestionModal from "./questionnaire/QuestionModal";
 
 const Form = () => {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
+  const [openModal, setOpenModal] = useState(false);
   const promptRef = useRef<HTMLInputElement>(null);
   const [questionsList, setQuestionsList] = useState<QuestionType[]>([]);
   const { fetchQuestions } = useFetchQuestions();
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const questions = fetchQuestions(promptRef.current.value);
+    const questions = await fetchQuestions(promptRef.current.value);
     console.log({ questions });
     setQuestionsList(Object.values(questions));
+    setOpenModal(true);
   };
 
   return (
@@ -55,12 +57,10 @@ const Form = () => {
             </div>
           </CardContent>
           <CardFooter className="flex justify-between">
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button className={cn("w-full")} type="submit">
-                  Generate Blog Post
-                </Button>
-              </DialogTrigger>
+            <Button className={cn("w-full")} type="submit">
+              Generate Blog Post
+            </Button>
+            <Dialog open={openModal} onOpenChange={setOpenModal}>
               <QuestionModal questionsList={questionsList} />
             </Dialog>
           </CardFooter>
