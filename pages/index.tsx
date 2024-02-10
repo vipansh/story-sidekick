@@ -2,8 +2,11 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import Form from "../@/components/Form";
 import AllBlogsCard from "../@/components/AllBlogsCard";
+import { getAllBlogs } from "../@/lib/supabase";
+import { Suspense } from "react";
+import Loader from "../@/components/Loader";
 
-export default function Home() {
+export default function Home({ blogs }) {
   return (
     <div className={styles.container}>
       <Head>
@@ -14,8 +17,21 @@ export default function Home() {
 
       <main className="flex flex-col items-center justify-between p-4 md:p-8 lg:p-12">
         <Form />
-        <AllBlogsCard />
+        <Suspense
+          fallback={
+            <div>
+              <Loader message="Loading blogs..." />
+            </div>
+          }
+        >
+          <AllBlogsCard blogs={blogs.data} />
+        </Suspense>
       </main>
     </div>
   );
 }
+
+export const getServerSideProps = async () => {
+  const blogs = await getAllBlogs();
+  return { props: { blogs } };
+};

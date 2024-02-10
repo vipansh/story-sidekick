@@ -1,60 +1,38 @@
 /* eslint-disable @next/next/no-img-element */
-import { useEffect, useState } from "react";
 import Link from "next/link";
-import { getAllBlogs } from "../lib/supabase";
 import { formetDate } from "../lib/utils";
 import { AspectRatio } from "./ui/aspect-ratio";
 import { LayoutComponent } from "./ui/layout-comp";
 
-type Props = {};
+type Props = {
+  blogs: any;
+  // isLoading: boolean;
+};
 
-const AllBlogsCard = ({}: Props) => {
-  const [data, setData] = useState([]);
-  const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await getAllBlogs();
-        setData(result.data);
-      } catch (error) {
-        console.error("Failed to fetch data:", error);
-        setError(error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
+const AllBlogsCard = ({ blogs }: Props) => {
+  // if (isLoading) {
+  //   const Skeleton = () => (
+  //     <div className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl bg-gradient-to-br from-neutral-200 dark:from-neutral-900 dark:to-neutral-800 to-neutral-100"></div>
+  //   );
+  //   return (
+  //     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-7xl mx-auto">
+  //       <Skeleton />
+  //       <Skeleton />
+  //       <Skeleton />
+  //       <Skeleton />
+  //       <Skeleton />
+  //       <Skeleton />
+  //       <Skeleton />
+  //     </div>
+  //   );
+  // }
 
-  if (isLoading) {
-    const Skeleton = () => (
-      <div className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl bg-gradient-to-br from-neutral-200 dark:from-neutral-900 dark:to-neutral-800 to-neutral-100"></div>
-    );
-    return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-7xl mx-auto">
-        <Skeleton />
-        <Skeleton />
-        <Skeleton />
-        <Skeleton />
-        <Skeleton />
-        <Skeleton />
-        <Skeleton />
-      </div>
-    );
-  }
-
-  if (error) {
-    return <div>Failed to load blogs. Please try again later.</div>;
-  }
-
-  if (!data || data.length === 0) {
+  if (!blogs || blogs.length === 0) {
     return <div>No blogs available at the moment.</div>;
   }
-  console.log({ data: data[0] });
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-7xl mx-auto">
-      {data.map((blog) => (
+      {blogs?.map((blog) => (
         <Link href={`/blog/${blog.id}`} passHref key={blog.id}>
           <div className=" row-span-1 rounded-xl group/bento bg-white border border-transparent space-y-4 flex flex-col p-4 tracking-tight text-slate-100/50 w-full h-full shadow-[0_8px_16px_rgb(0_0_0/0.4)] min-w-72">
             <h3 className="pb-2 m-0 font-bold text-base text-slate-800 min-h-16 ">

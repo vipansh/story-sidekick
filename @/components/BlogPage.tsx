@@ -2,16 +2,16 @@ import React from "react";
 import Markdown from "react-markdown";
 import BlogCard from "./BlogCard";
 import BlogHeader from "./BlogHeader";
-import useBlogData from "../hooks/useBlogData";
 import { Separator } from "./ui/separator";
 import BlogImage from "./BlogImage";
 import { CardContent } from "./ui/card";
 import { FloatingButton } from "./ui/floating-button";
 import { LayoutComponent } from "./ui/layout-comp";
+import { BlogData } from "../lib/supabase";
 
-const BlogPage: React.FC = () => {
-  const blogData = useBlogData();
-
+const BlogPage: React.FC<{ blogData: BlogData }> = ({ blogData }) => {
+  // const blogData = useBlogData();
+  console.log({ blogData });
   if (!blogData?.content?.content) {
     return <div>Loading...</div>;
   }

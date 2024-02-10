@@ -5,7 +5,7 @@ import { createClient } from "@supabase/supabase-js";
 
 // Ensure environment variables are defined
 if (!supabaseUrl || !supabaseAnonKey) {
-  console.log({supabaseUrl ,supabaseAnonKey,supabaseServiceRoleKey})
+  console.log({ supabaseUrl, supabaseAnonKey, supabaseServiceRoleKey })
   throw new Error("Supabase URL and Service Key must be defined");
 }
 
@@ -15,6 +15,15 @@ export const supabaseClient = createClient(supabaseUrl, supabaseServiceRoleKey);
 export const getServiceSupabase = () => {
   return createClient(supabaseUrl, supabaseServiceRoleKey);
 };
+
+
+export interface BlogData {
+  content: {
+    title: string;
+    content: Array<{ data: string[] }>;
+  };
+  imageUrl: string;
+}
 
 export const getBlogById = async (id: number) => {
   const blog = await supabaseClient

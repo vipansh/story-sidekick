@@ -13,7 +13,7 @@ import {
   CardTitle,
 } from "./ui/card";
 import QuestionModal from "./questionnaire/QuestionModal";
-import LoaderModalAnimation from "./LoaderModalAnimation";
+import LoaderModalAnimation from "./Loader";
 import { Dialog } from "./ui/dialog";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";

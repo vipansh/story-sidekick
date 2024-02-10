@@ -1,6 +1,6 @@
 import React from "react";
 
-const LoaderModalAnimation = ({ message }: { message: string }) => {
+const Loader = ({ message }: { message: string }) => {
   return (
     <div className="fixed inset-0 bg-opacity-75 bg-white dark:bg-gray-900 z-50 flex justify-center items-center">
       <div className="flex items-center flex-col justify-center space-y-3">
@@ -28,4 +28,4 @@ const LoaderModalAnimation = ({ message }: { message: string }) => {
   );
 };
 
-export default LoaderModalAnimation;
+export default Loader;
