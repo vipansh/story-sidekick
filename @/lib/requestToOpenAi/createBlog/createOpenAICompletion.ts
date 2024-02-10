@@ -22,7 +22,7 @@ export async function createOpenAICompletion(prompt: string): Promise<OpenAIResp
       const messages: MessagesType = [
             {
                   role: "user",
-                  content: `Please generate a response in a JSON format compatible with our Zod schema. The response should be a JSON object containing a 'content' as string in markdown format. The content should be an SEO-friendly blog post in markdown format in min 1000 words, with a compelling title and engaging, informative content suitable for the topic. Use headings, bullet points, and short paragraphs.Also give me imagesTags as an array of string to search for topic related images
+                  content: `Please generate a detailed response in a JSON format that adheres to our Zod schema. The response should consist of a JSON object with a 'content' field in markdown format. The content should be a comprehensive SEO-friendly blog post with a minimum of 1000 words. Ensure the post has a captivating title and engaging, informative content relevant to the topic. Utilize headings, bullet points, and concise paragraphs. Additionally, include imageTags as an array of strings to facilitate searching for topic-related images.
                   `,
             }, {
                   role: "system",
