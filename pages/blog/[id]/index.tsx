@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import BlogPage from "../../../@/components/BlogPage";
 import { BlogData, getBlogById } from "../../../@/lib/supabase";
 import Head from "next/head";
@@ -37,7 +37,9 @@ const index = ({ blogData }: { blogData: BlogData }) => {
 
         {/* Meta Tags Generated via https://www.opengraph.xyz */}
       </Head>
-      <BlogPage blogData={blogData} />;
+      <Suspense fallback={<p>Loading blog data...</p>}>
+        <BlogPage blogData={blogData} />;
+      </Suspense>
     </div>
   );
 };
