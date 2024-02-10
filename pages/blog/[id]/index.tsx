@@ -2,6 +2,8 @@ import React from "react";
 import BlogPage from "../../../@/components/BlogPage";
 import { getBlogById } from "../../../@/lib/supabase";
 
+export const runtime = "edge";
+
 const index = ({ blogData }) => {
   return <BlogPage blogData={blogData} />;
 };

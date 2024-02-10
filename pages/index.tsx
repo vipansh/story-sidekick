@@ -6,6 +6,8 @@ import { getAllBlogs } from "../@/lib/supabase";
 import { Suspense } from "react";
 import Loader from "../@/components/Loader";
 
+export const runtime = "edge";
+
 export default function Home({ blogs }) {
   return (
     <div className={styles.container}>
