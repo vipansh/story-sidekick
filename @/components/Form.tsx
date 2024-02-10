@@ -17,7 +17,7 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import useCreateBlog from "../hooks/useCreateBlog";
 import { QuestionStructure } from "../lib/requestToOpenAi/requestForHeadding/standerdRes";
-import HeadingOptionsComp from "./headingOptions/headingOptions";
+import HeadingOptionsComp from "./headingOptions/HeadingOptionsComp";
 
 const Form = () => {
   const [loading, setLoading] = useState(false);

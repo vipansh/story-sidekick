@@ -16,7 +16,7 @@ type Props = {
   setSelectedOptions: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
-const HeadingOptions: React.FC<Props> = ({
+const HeadingOptionsComp: React.FC<Props> = ({
   options,
   setSelectedOptions,
   selectedOptions,
@@ -48,4 +48,4 @@ const HeadingOptions: React.FC<Props> = ({
   );
 };
 
-export default HeadingOptions;
+export default HeadingOptionsComp;
