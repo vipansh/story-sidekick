@@ -1,11 +1,45 @@
 import React from "react";
 import BlogPage from "../../../@/components/BlogPage";
-import { getBlogById } from "../../../@/lib/supabase";
+import { BlogData, getBlogById } from "../../../@/lib/supabase";
+import Head from "next/head";
 
 export const runtime = "experimental-edge";
 
-const index = ({ blogData }) => {
-  return <BlogPage blogData={blogData} />;
+type Props = {
+  params: { id: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+const index = ({ blogData }: { blogData: BlogData }) => {
+  return (
+    <div>
+      <Head>
+        <title>{blogData.content.title}</title>
+        <meta name="description" content="Generated blogs with AI" />
+
+        {/* Facebook Meta Tags */}
+        <meta property="og:url" content="https://story-sidekick.pages.dev/" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={blogData.content.title} />
+        <meta property="og:description" content="Generated blogs with AI" />
+        <meta property="og:image" content={blogData.imageUrl} />
+
+        {/* Twitter Meta Tags */}
+        <meta name="twitter:card" content={blogData.imageUrl} />
+        <meta property="twitter:domain" content="story-sidekick.pages.dev" />
+        <meta
+          property="twitter:url"
+          content="https://story-sidekick.pages.dev/"
+        />
+        <meta name="twitter:title" content={blogData.content.title} />
+        <meta name="twitter:description" content="Generated blogs with AI" />
+        <meta name="twitter:image" content={blogData.imageUrl} />
+
+        {/* Meta Tags Generated via https://www.opengraph.xyz */}
+      </Head>
+      <BlogPage blogData={blogData} />;
+    </div>
+  );
 };
 
 export default index;
