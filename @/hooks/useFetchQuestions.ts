@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import { toast } from 'sonner';
-import { QuestionStructure, exampleQuestionStructure } from '../lib/requestToOpenAi/requestForQuestions/standerdRes';
+import { QuestionStructure, exampleQuestionStructure } from '../lib/requestToOpenAi/requestForHeadding/standerdRes';
 
 // Define the hook
 const useFetchQuestions = () => {

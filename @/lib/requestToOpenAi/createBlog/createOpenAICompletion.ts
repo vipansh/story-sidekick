@@ -9,7 +9,7 @@ const openAIResponseSchema = z.object({
       content: z.string(),
       imageTags: z.array(z.string())
 });
-
+const openAIMarkdownResponseSchema = z.string()
 export type OpenAIResponse = {
       title: string;
       content: string;
@@ -22,8 +22,7 @@ export async function createOpenAICompletion(prompt: string): Promise<OpenAIResp
       const messages: MessagesType = [
             {
                   role: "user",
-                  content: `Please generate a response in a JSON format compatible with our Zod schema. The response should be a JSON object containing a 'content' as string in markdown format. The content should be an SEO-friendly blog post in markdown format, with a compelling title and engaging, informative content suitable for the topic. Use headings, bullet points, and short paragraphs.
-                  also give me imagesTags as an array of string to search for topic related images
+                  content: `Please generate a response in a JSON format compatible with our Zod schema. The response should be a JSON object containing a 'content' as string in markdown format. The content should be an SEO-friendly blog post in markdown format in min 1000 words, with a compelling title and engaging, informative content suitable for the topic. Use headings, bullet points, and short paragraphs.Also give me imagesTags as an array of string to search for topic related images
                   `,
             }, {
                   role: "system",
@@ -41,19 +40,16 @@ export async function createOpenAICompletion(prompt: string): Promise<OpenAIResp
                   role: "user",
                   content: prompt,
             },
-            {
-                  role: "system",
-                  content: "As per the example, structure your response to fit our JSON format specification. The markdown formatted blog post should address the prompt provided, adhering to SEO best practices.",
-            },
-
       ]
 
       try {
-            return await fetchOpenAICompletion(prompt, openAIResponseSchema, messages);
+        
+            return await fetchOpenAICompletion(openAIResponseSchema, messages);
       } catch (error) {
             console.error("❌ Error fetching OpenAI completion:", error);
             throw error;
       }
 }
+
 
 

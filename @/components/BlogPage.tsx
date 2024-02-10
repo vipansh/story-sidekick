@@ -20,7 +20,7 @@ const BlogPage: React.FC<{ blogData: BlogData }> = ({ blogData }) => {
         <h1 className="mb-5 my-3 text-5xl font-semibold text-gray-800 ">
           {blogData.content.title}
         </h1>
-        <LayoutComponent layoutId={blogData.content.title}>
+        <LayoutComponent layoutId={`${blogData.content.title}-image`}>
           <BlogImage
             imageUrl={blogData.imageUrl}
             title={blogData.content.title}

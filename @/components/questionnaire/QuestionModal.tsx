@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   DialogContent,
   DialogHeader,
@@ -8,11 +8,10 @@ import {
 } from "../ui/dialog";
 import { Button } from "../ui/button";
 import Question from "./Question"; // Make sure this path is correct
-import { QuestionType } from "../../lib/requestToOpenAi/requestForQuestions/standerdRes";
 import { Separator } from "../ui/separator";
 
 type Props = {
-  questionsList: QuestionType[];
+  questionsList: any[];
   primaryAction: () => void;
   selectedOptions: Record<string, string[]>;
   setSelectedOptions: React.Dispatch<

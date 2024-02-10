@@ -3,7 +3,6 @@ import { ZodSchema } from "zod";
 export type MessagesType = Array<{ role: "system" | "user"; content: string }>;
 
 export async function fetchOpenAICompletion(
-      prompt: string,
       openAIResponseSchema: ZodSchema,
       messages: MessagesType,
       lastResponse = null,
@@ -52,8 +51,9 @@ export async function fetchOpenAICompletion(
             return parseResult.data;
       } else {
             console.error("❌ Validation failed, retrying with error details:", parseResult.error);
-            return fetchOpenAICompletion(prompt, openAIResponseSchema, messages, responseData.choices[0].message.content, JSON.stringify(parseResult.error));
+            return fetchOpenAICompletion(openAIResponseSchema, messages, responseData.choices[0].message.content, JSON.stringify(parseResult.error));
       }
 }
+
 
 

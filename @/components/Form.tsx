@@ -1,9 +1,7 @@
 import { useState, useRef, FormEvent } from "react";
-import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { cn } from "../lib/utils";
 import useFetchQuestions from "../hooks/useFetchQuestions";
-import { QuestionType } from "../lib/requestToOpenAi/requestForQuestions/standerdRes";
 import {
   Card,
   CardContent,
@@ -12,44 +10,39 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/card";
-import QuestionModal from "./questionnaire/QuestionModal";
 import LoaderModalAnimation from "./Loader";
-import { Dialog } from "./ui/dialog";
+import { Dialog, DialogContent, DialogFooter } from "./ui/dialog";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import useCreateBlog from "../hooks/useCreateBlog";
+import { QuestionStructure } from "../lib/requestToOpenAi/requestForHeadding/standerdRes";
+import HeadingOptionsComp from "./headingOptions/headingOptions";
 
 const Form = () => {
   const [loading, setLoading] = useState(false);
-  const [dialogState, setDialogState] = useState({
-    questionModal: false,
-  });
+  const [dialogState, setDialogState] = useState(false);
 
   const promptRef = useRef<HTMLInputElement>(null);
-  const [questionsList, setQuestionsList] = useState<QuestionType[]>([]);
+  const [headingOptions, setHeadingOptions] = useState<QuestionStructure>({
+    headingsOption: [],
+  });
+  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+
   const { fetchQuestions } = useFetchQuestions();
   const { action, loading: loadingCreateBlog } = useCreateBlog();
 
-  const [selectedOptions, setSelectedOptions] = useState<
-    Record<string, string[]>
-  >({});
-
-  const openDialog = (dialogName: keyof typeof dialogState) => {
-    setDialogState((prev) => ({ ...prev, [dialogName]: true }));
-  };
-
-  const closeDialog = (dialogName: keyof typeof dialogState) => {
-    setDialogState((prev) => ({ ...prev, [dialogName]: false }));
-  };
+  const openDialog = () => setDialogState(true);
+  const closeDialog = () => setDialogState(false);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     try {
       const questions = await fetchQuestions(promptRef.current?.value || "");
-      setQuestionsList(Object.values(questions));
-      openDialog("questionModal");
+      setHeadingOptions(questions);
+      setSelectedOptions(questions.headingsOption.slice(0, 5));
+      openDialog();
     } catch (error) {
       console.error("Fetching questions failed", error);
       toast.error("An error occurred while generating questions.");
@@ -58,10 +51,13 @@ const Form = () => {
     }
   };
 
-  const prompt = `${promptRef?.current?.value},
-  Extra inforamtion----------
-  ${JSON.stringify(selectedOptions)}
-  `;
+  const handleGenerate = () => {
+    const fullPrompt = `${prompt},
+    Extra information make your blog around----------
+    ${JSON.stringify(selectedOptions)}`;
+    action(fullPrompt);
+    closeDialog();
+  };
   return (
     <section className="mx-auto max-w-lg">
       <Card className="border-0 shadow-none">
@@ -87,20 +83,20 @@ const Form = () => {
             </Button>
           </CardFooter>
         </form>
-        {dialogState.questionModal && (
-          <Dialog
-            open={dialogState.questionModal}
-            onOpenChange={() => closeDialog("questionModal")}
-          >
-            <QuestionModal
-              questionsList={questionsList}
-              primaryAction={() => {
-                closeDialog("questionModal");
-                action(prompt);
-              }}
-              selectedOptions={selectedOptions}
-              setSelectedOptions={setSelectedOptions}
-            />
+        {dialogState && (
+          <Dialog open={dialogState} onOpenChange={() => closeDialog()}>
+            <DialogContent className="py-4 w-5/6 mx-auto ">
+              <HeadingOptionsComp
+                options={headingOptions.headingsOption}
+                setSelectedOptions={setSelectedOptions}
+                selectedOptions={selectedOptions}
+              />
+              <DialogFooter className="py-4">
+                <Button type="submit" onClick={handleGenerate}>
+                  Generate
+                </Button>
+              </DialogFooter>
+            </DialogContent>
           </Dialog>
         )}
         {loading && <LoaderModalAnimation message="Loading..." />}

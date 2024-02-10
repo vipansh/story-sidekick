@@ -1,4 +1,4 @@
-import { requestForQuestion } from "../../@/lib/requestToOpenAi/requestForQuestions/requestForQuestion";
+import { requestForHeadding } from "../../@/lib/requestToOpenAi/requestForHeadding/requestForHeadding";
 
 
 
@@ -29,7 +29,7 @@ export default async function handler(request: Request): Promise<Response> {
             validateInputs(prompt);
 
             console.log("🌟 Generating question with OpenAI...");
-            const questions = await requestForQuestion(prompt);
+            const questions = await requestForHeadding(prompt);
             console.log("🚀 Question generated successfully.");
 
 
