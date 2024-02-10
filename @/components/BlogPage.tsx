@@ -1,21 +1,17 @@
 import React from "react";
-import Markdown from "react-markdown";
 import BlogCard from "./BlogCard";
 import BlogHeader from "./BlogHeader";
-import { Separator } from "./ui/separator";
 import BlogImage from "./BlogImage";
-import { CardContent } from "./ui/card";
 import { FloatingButton } from "./ui/floating-button";
 import { LayoutComponent } from "./ui/layout-comp";
 import { BlogData } from "../lib/supabase";
+import Markdown from "react-markdown";
 
 const BlogPage: React.FC<{ blogData: BlogData }> = ({ blogData }) => {
   // const blogData = useBlogData();
-  console.log({ blogData });
   if (!blogData?.content?.content) {
     return <div>Loading...</div>;
   }
-  console.log({ blogData });
   return (
     <BlogCard>
       <BlogHeader />
@@ -32,19 +28,7 @@ const BlogPage: React.FC<{ blogData: BlogData }> = ({ blogData }) => {
         </LayoutComponent>
 
         <article className="prose lg:prose-lg max-w-none mt-10">
-          {blogData?.content?.content?.map((section, index) => (
-            <div key={index}>
-              {section.data.map((item, itemIndex) => (
-                <React.Fragment key={itemIndex}>
-                  <CardContent>
-                    <Markdown>{item}</Markdown>
-                  </CardContent>
-
-                  <Separator className="my-1" />
-                </React.Fragment>
-              ))}
-            </div>
-          ))}
+          <Markdown>{blogData?.content?.content}</Markdown>
         </article>
       </div>
     </BlogCard>

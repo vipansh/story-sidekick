@@ -2,6 +2,7 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON;
 const supabaseServiceRoleKey = process.env.NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY;
 import { createClient } from "@supabase/supabase-js";
+import { OpenAIResponse } from "./requestToOpenAi/createBlog/createOpenAICompletion";
 
 // Ensure environment variables are defined
 if (!supabaseUrl || !supabaseAnonKey) {
@@ -20,7 +21,7 @@ export const getServiceSupabase = () => {
 export interface BlogData {
   content: {
     title: string;
-    content: Array<{ data: string[] }>;
+    content: string;
   };
   imageUrl: string;
 }

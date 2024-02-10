@@ -20,10 +20,6 @@ function validateInputs(prompt: string): void {
   }
 }
 
-console.log({ projectId });
-
-
-
 async function generateSegmindImage(prompt: string) {
   const url = "https://api.segmind.com/v1/ssd-1b";
   const data = {
@@ -124,17 +120,20 @@ export default async function handler(request: Request): Promise<Response> {
 
     validateInputs(prompt);
 
+    console.log("Generating blog content with OpenAI...");
+    const blogContent = await createOpenAICompletion(prompt);
+    console.log("Blog content generated successfully.", blogContent);
+
+
+
     console.log("Generating image with Sigmind...");
-    const imageBuffer = await generateSegmindImage(prompt);
+    const imageBuffer = await generateSegmindImage(blogContent.imageTags.join());
     console.log("Image generated successfully.");
 
     console.log("Uploading image to Supabase...");
     const imagePath = await uploadImageToSupabase(imageBuffer);
     console.log("Image uploaded successfully. Path:", imagePath);
 
-    console.log("Generating blog content with OpenAI...");
-    const blogContent = await createOpenAICompletion(prompt);
-    console.log("Blog content generated successfully.", blogContent);
 
     const blogData = await createBlogPostInSupabase(
       prompt,
