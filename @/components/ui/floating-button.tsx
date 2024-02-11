@@ -51,7 +51,7 @@ export const FloatingButton = ({ className }: { className?: string }) => {
         }}
         className={cn(
           "flex max-w-fit fixed bottom-5 right-10 mx-auto border border-transparent z-30",
-          className,
+          className
         )}
       >
         <Button onClick={onClick}>

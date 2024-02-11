@@ -17,7 +17,7 @@ export type OpenAIResponse = {
 
 // The main function to create an OpenAI completion
 export async function createOpenAICompletion(
-  prompt: string,
+  prompt: string
 ): Promise<OpenAIResponse> {
   const messages: MessagesType = [
     {

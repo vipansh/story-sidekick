@@ -50,7 +50,7 @@ const QuestionModal: React.FC<Props> = ({
               onClick={(updatedQuestion) =>
                 handleQuestionClick(
                   updatedQuestion.question,
-                  updatedQuestion.options,
+                  updatedQuestion.options
                 )
               }
               selectedOptions={selectedOptions[question.question] || []}

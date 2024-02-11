@@ -6,7 +6,7 @@ export async function fetchOpenAICompletion(
   openAIResponseSchema: ZodSchema,
   messages: MessagesType,
   lastResponse = null,
-  lastErrorMessage = null,
+  lastErrorMessage = null
 ) {
   const openAiKey = process.env.NEXT_PUBLIC_OPENAI_KEY;
   if (!openAiKey) {
@@ -45,10 +45,10 @@ export async function fetchOpenAICompletion(
   const responseData: any = await response.json();
   console.log(
     "Validate the response ✅",
-    responseData.choices[0].message.content,
+    responseData.choices[0].message.content
   );
   const parseResult: any = openAIResponseSchema.safeParse(
-    JSON.parse(responseData.choices[0].message.content),
+    JSON.parse(responseData.choices[0].message.content)
   );
 
   if (parseResult.success) {
@@ -57,13 +57,13 @@ export async function fetchOpenAICompletion(
   } else {
     console.error(
       "❌ Validation failed, retrying with error details:",
-      parseResult.error,
+      parseResult.error
     );
     return fetchOpenAICompletion(
       openAIResponseSchema,
       messages,
       responseData.choices[0].message.content,
-      JSON.stringify(parseResult.error),
+      JSON.stringify(parseResult.error)
     );
   }
 }

@@ -4,8 +4,8 @@ import "../styles/globals.css";
 function MyApp({ Component, pageProps }) {
   return (
     <>
-      <Toaster />
       <Component {...pageProps} />
+      <Toaster />
     </>
   );
 }

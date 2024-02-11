@@ -6,11 +6,13 @@ import { Suspense } from "react";
 import Loader from "../@/components/Loader";
 import { getAllBlogs } from "../@/lib/supabaseClient/fetchBlog";
 import { Button } from "../@/components/ui/button";
-import { login } from "../@/lib/supabaseClient/auth";
+import { getUser, login } from "../@/lib/auth/auth";
 
 export const runtime = "experimental-edge";
 
 export default function Home({ blogs }) {
+  const data = getUser();
+  console.log(data);
   return (
     <div className={styles.container}>
       <Head>

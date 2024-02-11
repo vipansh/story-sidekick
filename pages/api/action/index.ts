@@ -80,7 +80,7 @@ async function uploadImageToSupabase(imageBuffer: any): Promise<string> {
 async function createBlogPostInSupabase(
   prompt: string,
   blogContent: string,
-  imagePath: string,
+  imagePath: string
 ): Promise<{ id: number }> {
   const imageUrl = `${projectId}/storage/v1/object/public/images/${imagePath}`;
 
@@ -126,7 +126,7 @@ export default async function handler(request: Request): Promise<Response> {
 
     console.log("Generating image with Sigmind...");
     const imageBuffer = await generateSegmindImage(
-      blogContent.imageTags.join(),
+      blogContent.imageTags.join()
     );
     console.log("Image generated successfully.");
 
@@ -137,7 +137,7 @@ export default async function handler(request: Request): Promise<Response> {
     const blogData = await createBlogPostInSupabase(
       prompt,
       JSON.stringify(blogContent),
-      imagePath,
+      imagePath
     );
 
     return new Response(JSON.stringify({ blogId: blogData.id }), {

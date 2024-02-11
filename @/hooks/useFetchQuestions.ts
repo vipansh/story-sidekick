@@ -34,7 +34,7 @@ const useFetchQuestions = () => {
       return data as QuestionStructure;
     } catch (error) {
       toast.error(
-        "An error occurred while processing your request. Please try again.",
+        "An error occurred while processing your request. Please try again."
       );
       console.error("Error", error);
     } finally {
