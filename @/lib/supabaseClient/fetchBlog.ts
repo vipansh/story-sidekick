@@ -1,4 +1,4 @@
-import { supabaseClient } from "./supabase";
+import { supabaseClient } from "../supabase";
 
 export interface BlogData {
       content: {

@@ -4,10 +4,9 @@ import BlogHeader from "./BlogHeader";
 import BlogImage from "./BlogImage";
 import { FloatingButton } from "./ui/floating-button";
 import { LayoutComponent } from "./ui/layout-comp";
-import { BlogData } from "../lib/supabase";
 import Markdown from "react-markdown";
 
-const BlogPage: React.FC<{ blogData: BlogData }> = ({ blogData }) => {
+const BlogPage: React.FC<{ blogData: any }> = ({ blogData }) => {
   // const blogData = useBlogData();
   if (!blogData?.content?.content) {
     return <div>Loading...</div>;

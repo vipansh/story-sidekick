@@ -1,9 +1,13 @@
 import React, { Suspense } from "react";
 import BlogPage from "../../../@/components/BlogPage";
 import Head from "next/head";
-import { BlogData, getBlogById } from "../../../@/lib/supabaseClient";
+import {
+  BlogData,
+  getAllBlogs,
+  getBlogById,
+} from "../../../@/lib/supabaseClient/fetchBlog";
 
-export const runtime = "experimental-edge";
+ export const runtime = "experimental-edge";
 
 type Props = {
   params: { id: string };
@@ -37,17 +41,27 @@ const index = ({ blogData }: { blogData: BlogData }) => {
 
         {/* Meta Tags Generated via https://www.opengraph.xyz */}
       </Head>
-      <Suspense fallback={<p>Loading blog data...</p>}>
-        <BlogPage blogData={blogData} />;
-      </Suspense>
+      <BlogPage blogData={blogData} />;
     </div>
   );
 };
 
 export default index;
 
-export const getServerSideProps = async ({ query }) => {
-  const id = query.id;
+export const getStaticPaths = async () => {
+  const blogs = await getAllBlogs();
+  return {
+    paths: blogs.data.map((blog) => ({
+      params: {
+        id: blog.id.toString(),
+      },
+    })),
+    fallback: false,
+  };
+};
+
+export const getStaticProps = async ({ params }) => {
+  const id = params.id;
   const { data } = await getBlogById(Number(id));
   return {
     props: {

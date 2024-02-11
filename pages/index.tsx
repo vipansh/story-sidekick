@@ -4,7 +4,9 @@ import Form from "../@/components/Form";
 import AllBlogsCard from "../@/components/AllBlogsCard";
 import { Suspense } from "react";
 import Loader from "../@/components/Loader";
-import { getAllBlogs } from "../@/lib/supabaseClient";
+import { getAllBlogs } from "../@/lib/supabaseClient/fetchBlog";
+import { Button } from "../@/components/ui/button";
+import { login } from "../@/lib/supabaseClient/auth";
 
 export const runtime = "experimental-edge";
 
@@ -38,6 +40,7 @@ export default function Home({ blogs }) {
 
       <main className="flex flex-col items-center justify-between p-4 md:p-8 lg:p-12">
         <Form />
+        <Button onClick={login} variant="secondary">Login</Button>
         <Suspense
           fallback={
             <div>
