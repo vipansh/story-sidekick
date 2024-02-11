@@ -5,13 +5,16 @@ import Form from "../@/components/Form";
 import AllBlogsCard from "../@/components/AllBlogsCard";
 import { Suspense } from "react";
 import Loader from "../@/components/Loader";
-import { getAllBlogs } from "../@/lib/supabaseClient/fetchBlog";
+import { Blog, getAllBlogs } from "../@/lib/supabaseClient/fetchBlog";
 
 import Navbar from "../@/components/navbar/Navbar";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 
 export const runtime = "experimental-edge";
 
-export default function Home({ blogs }) {
+export default function Home({
+  blogs,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <div className={styles.container}>
       <Head>
@@ -56,7 +59,7 @@ export default function Home({ blogs }) {
   );
 }
 
-export const getStaticProps = async () => {
+export const getServerSideProps = (async () => {
   const blogs = await getAllBlogs();
   return { props: { blogs } };
-};
+}) satisfies GetServerSideProps<{ blogs: { data: Blog[] } }>;

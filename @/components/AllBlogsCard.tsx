@@ -4,14 +4,9 @@ import { formetDate } from "../lib/utils";
 import { LayoutComponent } from "./ui/layout-comp";
 import BlogImage from "./BlogImage";
 import React from "react";
+import { Blog } from "../lib/supabaseClient/fetchBlog";
 
-type Blog = {
-  id: string;
-  content: string;
-  created_at: string;
-  title: string;
-  imageUrl: string;
-};
+
 
 type Props = {
   blogs: Blog[];

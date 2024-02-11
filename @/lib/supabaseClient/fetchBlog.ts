@@ -24,3 +24,12 @@ export const getAllBlogs = async () => {
     .order("created_at", { ascending: false });
   return allBlogs;
 };
+
+
+export type Blog = {
+  id: string;
+  content: string;
+  created_at: string;
+  title: string;
+  imageUrl: string;
+};
