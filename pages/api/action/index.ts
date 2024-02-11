@@ -1,12 +1,11 @@
 // import OpenAI from "openai";
 import { decode } from "base64-arraybuffer";
-import { getServiceSupabase } from "../../../@/lib/supabase";
 import { ApplicationError } from "../../../@/lib/error";
 import { createOpenAICompletion } from "../../../@/lib/requestToOpenAi/createBlog/createOpenAICompletion";
+import { supabaseClient } from "../../../@/lib/supabase";
 
 export const runtime = "edge";
 
-const supabaseClient = getServiceSupabase();
 const apiKey = process.env.NEXT_PUBLIC_SIGMIND_API_KEY;
 const projectId = process.env.NEXT_PUBLIC_SUPABASE_URL;
 
