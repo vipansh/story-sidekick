@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogFooter,
-} from "../ui/dialog";
-import { Button } from "../ui/button";
-import { Separator } from "../ui/separator";
+import { DialogHeader, DialogTitle, DialogDescription } from "../ui/dialog";
 import Options from "./Options";
 
 type Props = {
@@ -39,8 +31,6 @@ const HeadingOptionsComp: React.FC<Props> = ({
             selectedOptions={selectedOptions} // Removed unnecessary brackets
           />
         </div>
-        {/* <Separator orientation="vertical" />
-        <div className="flex-1">Log in to unlock these features</div>{" "} */}
       </div>
     </>
   );

@@ -1,3 +1,4 @@
+import React from "react";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import Form from "../@/components/Form";
@@ -5,7 +6,6 @@ import AllBlogsCard from "../@/components/AllBlogsCard";
 import { Suspense } from "react";
 import Loader from "../@/components/Loader";
 import { getAllBlogs } from "../@/lib/supabaseClient/fetchBlog";
-import { Button } from "../@/components/ui/button";
 
 import Navbar from "../@/components/navbar/Navbar";
 

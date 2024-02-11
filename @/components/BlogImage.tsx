@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
-import { AspectRatio } from "@radix-ui/react-aspect-ratio";
 import React from "react";
+import { AspectRatio } from "@radix-ui/react-aspect-ratio";
 
 type BlogImageProps = {
   imageUrl: string;

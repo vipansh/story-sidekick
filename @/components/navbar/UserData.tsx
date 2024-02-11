@@ -11,6 +11,7 @@ import {
 } from "../ui/dropdown-menu";
 import { Separator } from "../ui/separator";
 import { capitalizeFirstLetter } from "../../lib/utils";
+import { LayoutComponent } from "../ui/layout-comp";
 
 type Props = {};
 
@@ -33,9 +34,12 @@ const UserData = ({}: Props) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuLabel>
-            My Account
-            <Separator />
-            {capitalizeFirstLetter(user?.user_metadata?.full_name)}
+            <LayoutComponent layoutId="avatar-name">
+              My Account
+              <Separator />
+              {capitalizeFirstLetter(user?.user_metadata?.full_name)}
+              {user?.user_metadata?.name}
+            </LayoutComponent>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem>By Blogs</DropdownMenuItem>

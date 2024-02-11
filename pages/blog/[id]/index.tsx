@@ -1,8 +1,9 @@
-import React, { Suspense } from "react";
+import React from "react";
 import BlogPage from "../../../@/components/BlogPage";
 import Head from "next/head";
 import {
   BlogData,
+  getAllBlogs,
   getBlogById,
 } from "../../../@/lib/supabaseClient/fetchBlog";
 
@@ -42,8 +43,20 @@ const index = ({ blogData }: { blogData: BlogData }) => {
 
 export default index;
 
-export const getServerSideProps = async ({ query }) => {
-  const id = query.id;
+export const getStaticPaths = async () => {
+  const blogs = await getAllBlogs();
+  return {
+    paths: blogs.data.map((blog) => ({
+      params: {
+        id: blog.id.toString(),
+      },
+    })),
+    fallback: false,
+  };
+};
+
+export const getStaticProps = async ({ params }) => {
+  const id = params.id;
   const { data } = await getBlogById(Number(id));
   return {
     props: {

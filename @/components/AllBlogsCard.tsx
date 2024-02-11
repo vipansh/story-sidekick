@@ -3,6 +3,7 @@ import Link from "next/link";
 import { formetDate } from "../lib/utils";
 import { LayoutComponent } from "./ui/layout-comp";
 import BlogImage from "./BlogImage";
+import React from "react";
 
 type Blog = {
   id: string;
@@ -17,8 +18,7 @@ type Props = {
 };
 
 const AllBlogsCard = ({ blogs }: Props) => {
-  
-  if (!blogs || blogs.length === 0) {
+  if (!blogs || blogs?.length === 0) {
     return (
       <div className="text-center py-10">No blogs available at the moment.</div>
     );
