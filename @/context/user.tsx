@@ -2,12 +2,34 @@ import { createContext, useState, useEffect, useContext } from "react";
 import { useRouter } from "next/router";
 import { supabaseClient } from "../lib/supabase";
 
-const UserContext = createContext(null);
+type ContextValue = {
+  user: User | null;
+  isLoading: boolean;
+  login: () => Promise<void>;
+  logout: () => Promise<void>;
+};
+
+const UserContext = createContext<ContextValue>(null);
+
+export type User = {
+  user_metadata: {
+    avatar_url: string;
+    email: string;
+    email_verified: boolean;
+    full_name: string;
+    iss: string;
+    name: string;
+    phone_verified: boolean;
+    picture: string;
+    provider_id: string;
+    sub: string;
+  };
+};
 
 const UserProvider = ({ children }) => {
   const router = useRouter();
-  const [user, setUser] = useState(null);
-
+  const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     const fetchUserProfile = async () => {
       const { session: sessionUser } = (await supabaseClient.auth.getSession())
@@ -26,12 +48,13 @@ const UserProvider = ({ children }) => {
         });
       }
     };
-
+    setIsLoading(true);
     fetchUserProfile();
 
     supabaseClient.auth.onAuthStateChange(() => {
       fetchUserProfile();
     });
+    setIsLoading(false);
   }, []);
 
   const login = async () => {
@@ -44,12 +67,12 @@ const UserProvider = ({ children }) => {
     router.push("/");
   };
 
-  const contextValue = {
+  const contextValue: ContextValue = {
     user,
     login,
     logout,
+    isLoading,
   };
-
   return (
     <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>
   );

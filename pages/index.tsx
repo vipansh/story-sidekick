@@ -7,15 +7,11 @@ import Loader from "../@/components/Loader";
 import { getAllBlogs } from "../@/lib/supabaseClient/fetchBlog";
 import { Button } from "../@/components/ui/button";
 
-import Link from "next/link";
-import { useUser } from "../@/context/user";
+import Navbar from "../@/components/navbar/Navbar";
 
 export const runtime = "experimental-edge";
 
 export default function Home({ blogs }) {
-  // const data = supabaseClient.auth.getUser();
-  const user = useUser();
-  console.log({ user });
   return (
     <div className={styles.container}>
       <Head>
@@ -42,12 +38,10 @@ export default function Home({ blogs }) {
 
         {/* Meta Tags Generated via https://www.opengraph.xyz */}
       </Head>
-
+      <Navbar />
       <main className="flex flex-col items-center justify-between p-4 md:p-8 lg:p-12">
         <Form />
-        <Link passHref href={"/login"}>
-          <Button variant="secondary">Login</Button>
-        </Link>
+
         <Suspense
           fallback={
             <div>
