@@ -12,7 +12,7 @@ const Options: React.FC<Props> = ({ options, onClick, selectedOptions }) => {
   const handleOptionClick = (option: string) => {
     toast.info("Log in to make chanegs");
     return;
-    
+
     const updatedOptions = selectedOptions.includes(option)
       ? selectedOptions.filter((selectedOption) => selectedOption !== option)
       : [...selectedOptions, option];

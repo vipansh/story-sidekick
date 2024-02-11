@@ -21,7 +21,6 @@ export const LayoutComponent = ({
         transition={{
           duration: 0.2,
         }}
-        
       >
         {children}
       </motion.div>

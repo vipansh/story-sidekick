@@ -1,7 +1,6 @@
-
-import { useState } from 'react';
-import { useRouter } from 'next/router';
-import { toast } from 'sonner';
+import { useState } from "react";
+import { useRouter } from "next/router";
+import { toast } from "sonner";
 
 // Define the hook
 const useCreateBlog = () => {
@@ -25,7 +24,7 @@ const useCreateBlog = () => {
       if (!response.ok) {
         throw new Error("Failed to fetch");
       }
-      const data = await response.json() as { blogId?: string };
+      const data = (await response.json()) as { blogId?: string };
       console.log({ data });
       if (data?.blogId) {
         router.push(`/blog/${data.blogId}`);
@@ -34,7 +33,7 @@ const useCreateBlog = () => {
       }
     } catch (error) {
       toast.error(
-        "An error occurred while processing your request. Please try again."
+        "An error occurred while processing your request. Please try again.",
       );
       console.error("Error", error);
     } finally {

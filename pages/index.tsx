@@ -40,7 +40,9 @@ export default function Home({ blogs }) {
 
       <main className="flex flex-col items-center justify-between p-4 md:p-8 lg:p-12">
         <Form />
-        <Button onClick={login} variant="secondary">Login</Button>
+        <Button onClick={login} variant="secondary">
+          Login
+        </Button>
         <Suspense
           fallback={
             <div>

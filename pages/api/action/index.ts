@@ -48,7 +48,7 @@ async function generateSegmindImage(prompt: string) {
     });
 
     if (!response.ok) {
-      console.log(response)
+      console.log(response);
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
     const imageBlob = (await response.json()) as { image: string };
@@ -80,7 +80,7 @@ async function uploadImageToSupabase(imageBuffer: any): Promise<string> {
 async function createBlogPostInSupabase(
   prompt: string,
   blogContent: string,
-  imagePath: string
+  imagePath: string,
 ): Promise<{ id: number }> {
   const imageUrl = `${projectId}/storage/v1/object/public/images/${imagePath}`;
 
@@ -124,21 +124,20 @@ export default async function handler(request: Request): Promise<Response> {
     const blogContent = await createOpenAICompletion(prompt);
     console.log("Blog content generated successfully.", blogContent);
 
-
-
     console.log("Generating image with Sigmind...");
-    const imageBuffer = await generateSegmindImage(blogContent.imageTags.join());
+    const imageBuffer = await generateSegmindImage(
+      blogContent.imageTags.join(),
+    );
     console.log("Image generated successfully.");
 
     console.log("Uploading image to Supabase...");
     const imagePath = await uploadImageToSupabase(imageBuffer);
     console.log("Image uploaded successfully. Path:", imagePath);
 
-
     const blogData = await createBlogPostInSupabase(
       prompt,
       JSON.stringify(blogContent),
-      imagePath
+      imagePath,
     );
 
     return new Response(JSON.stringify({ blogId: blogData.id }), {

@@ -29,9 +29,7 @@ const HeadingOptionsComp: React.FC<Props> = ({
     <>
       <DialogHeader className="pt-4">
         <DialogTitle>Custimise your blog</DialogTitle>
-        <DialogDescription>
-          Select from options below.
-        </DialogDescription>
+        <DialogDescription>Select from options below.</DialogDescription>
       </DialogHeader>
       <div className="flex flex-col md:flex-row  overflow-auto space-x-2  ">
         <div className="grid gap-4 py-1 flex-1">

@@ -7,7 +7,7 @@ import {
   getBlogById,
 } from "../../../@/lib/supabaseClient/fetchBlog";
 
- export const runtime = "experimental-edge";
+export const runtime = "experimental-edge";
 
 type Props = {
   params: { id: string };
