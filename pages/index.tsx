@@ -2,9 +2,9 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import Form from "../@/components/Form";
 import AllBlogsCard from "../@/components/AllBlogsCard";
-import { getAllBlogs } from "../@/lib/supabase";
 import { Suspense } from "react";
 import Loader from "../@/components/Loader";
+import { getAllBlogs } from "../@/lib/supabaseClient";
 
 export const runtime = "experimental-edge";
 

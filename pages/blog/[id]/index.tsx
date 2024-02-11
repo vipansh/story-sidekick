@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 import BlogPage from "../../../@/components/BlogPage";
-import { BlogData, getBlogById } from "../../../@/lib/supabase";
 import Head from "next/head";
+import { BlogData, getBlogById } from "../../../@/lib/supabaseClient";
 
 export const runtime = "experimental-edge";
 
