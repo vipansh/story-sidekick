@@ -9,3 +9,4 @@ export const supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
 export const getServiceSupabase = () => {
   return createClient(supabaseUrl, supabaseServiceRoleKey);
 };
+
