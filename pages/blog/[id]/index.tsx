@@ -3,16 +3,10 @@ import BlogPage from "../../../@/components/BlogPage";
 import Head from "next/head";
 import {
   BlogData,
-  getAllBlogs,
   getBlogById,
 } from "../../../@/lib/supabaseClient/fetchBlog";
 
 export const runtime = "experimental-edge";
-
-type Props = {
-  params: { id: string };
-  searchParams: { [key: string]: string | string[] | undefined };
-};
 
 const index = ({ blogData }: { blogData: BlogData }) => {
   return (
@@ -48,20 +42,8 @@ const index = ({ blogData }: { blogData: BlogData }) => {
 
 export default index;
 
-export const getStaticPaths = async () => {
-  const blogs = await getAllBlogs();
-  return {
-    paths: blogs.data.map((blog) => ({
-      params: {
-        id: blog.id.toString(),
-      },
-    })),
-    fallback: false,
-  };
-};
-
-export const getStaticProps = async ({ params }) => {
-  const id = params.id;
+export const getServerSideProps = async ({ query }) => {
+  const id = query.id;
   const { data } = await getBlogById(Number(id));
   return {
     props: {
