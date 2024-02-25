@@ -25,7 +25,7 @@ const Options: React.FC<Props> = ({ options, onClick, selectedOptions }) => {
   };
 
   return (
-    <div>
+    <div className="max-h-[60vh]">
       <div className="mb-4">
         <div className="font-bold text-xl text-gray-700">
           Select the options you want to include in your blog
