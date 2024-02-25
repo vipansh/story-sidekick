@@ -13,10 +13,10 @@ const Options: React.FC<Props> = ({ options, onClick, selectedOptions }) => {
   const { user } = useUser();
 
   const handleOptionClick = (option: string) => {
-    if (!user?.user_metadata) {
-      toast.info("Log in to make chanegs");
-      return;
-    }
+    // if (!user?.user_metadata) {
+    //   toast.info("Log in to make chanegs");
+    //   return;
+    // }
 
     const updatedOptions = selectedOptions.includes(option)
       ? selectedOptions.filter((selectedOption) => selectedOption !== option)
@@ -39,9 +39,9 @@ const Options: React.FC<Props> = ({ options, onClick, selectedOptions }) => {
           <div
             key={index}
             onClick={() => handleOptionClick(option)}
-            className={`py-2 hover:shadow-2xl vote-option px-4 border-2 border-gray-200 rounded-md shadow-md relative transition-all duration-500 bg-white   ${
+            className={`py-2 hover:shadow-2xl vote-option px-4 border-2 border-gray-200 rounded-md shadow-md relative transition-all duration-500 bg-white cursor-pointer   ${
               selectedOptions.includes(option) ? "border-violet-400 " : ""
-            } ${!user ? "cursor-not-allowed opacity-10" : "cursor-pointer"} `}
+            }`}
           >
             <div className="flex items-center ">
               <span className="flex items-center w-6 h-6 transition-all duration-200 rounded-full">

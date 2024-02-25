@@ -16,7 +16,7 @@ import { LayoutComponent } from "../ui/layout-comp";
 type Props = {};
 
 const UserData = ({}: Props) => {
-  const { user } = useUser();
+  const { user, logout } = useUser();
   if (!user) return null;
   return (
     <div>
@@ -42,9 +42,9 @@ const UserData = ({}: Props) => {
             </LayoutComponent>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>By Blogs</DropdownMenuItem>
-          <DropdownMenuItem>Billing</DropdownMenuItem>
-          <DropdownMenuItem>Sign Out</DropdownMenuItem>
+          <DropdownMenuItem>Buy Blogs (coming soon)</DropdownMenuItem>
+          <DropdownMenuItem>Billing (coming soon)</DropdownMenuItem>
+          <DropdownMenuItem onClick={logout}>Sign Out</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

@@ -29,7 +29,7 @@ export type User = {
 
 const UserProvider = ({ children }) => {
   const router = useRouter();
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null | any>(null);
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -37,15 +37,15 @@ const UserProvider = ({ children }) => {
         .data;
 
       if (sessionUser) {
-        const { data: profile } = await supabaseClient
-          .from("profile")
-          .select("*")
-          .eq("id", sessionUser.user.id)
-          .single();
+        // const { data: profile } = await supabaseClient
+        //   .from("profile")
+        //   .select("*")
+        //   .eq("id", sessionUser.user.id)
+        //   .single();
 
         setUser({
           ...sessionUser.user,
-          ...profile,
+          // ...profile,
         });
       }
     };

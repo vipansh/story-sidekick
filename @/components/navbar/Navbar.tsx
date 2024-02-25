@@ -9,6 +9,7 @@ type Props = {};
 
 const Navbar = ({}: Props) => {
   const { user, login, isLoading } = useUser();
+  console.log(!isLoading && user?.user_metadata);
   return (
     <div>
       <header className="bg-white">
@@ -21,12 +22,14 @@ const Navbar = ({}: Props) => {
               </span>
             </Link>
 
-            {!isLoading && user?.user_metadata ? (
-              <UserData />
-            ) : (
-              <div className="hidden md:flex md:items-center md:gap-4">
-                <Button onClick={login}>Login</Button>
+            {isLoading || !user?.user_metadata ? (
+              <div className=" md:flex md:items-center md:gap-4">
+                <Button onClick={login} disabled={isLoading}>
+                  {isLoading ? "Loading...." : "Login"}
+                </Button>
               </div>
+            ) : (
+              <UserData />
             )}
           </div>
         </div>
