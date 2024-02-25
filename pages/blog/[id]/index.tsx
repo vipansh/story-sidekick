@@ -65,5 +65,6 @@ export const getStaticProps = async ({ params }) => {
         imageUrl: data?.imageUrl,
       },
     },
+    notFound: true,
   };
 };
