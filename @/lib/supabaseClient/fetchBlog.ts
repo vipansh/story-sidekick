@@ -30,6 +30,5 @@ export type Blog = {
   id: string;
   content: string;
   created_at: string;
-  title: string;
   imageUrl: string;
 };

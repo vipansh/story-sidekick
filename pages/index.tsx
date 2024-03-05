@@ -8,7 +8,7 @@ import Loader from "../@/components/Loader";
 import { Blog, getAllBlogs } from "../@/lib/supabaseClient/fetchBlog";
 
 import Navbar from "../@/components/navbar/Navbar";
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import { InferGetServerSidePropsType } from "next";
 
 export const runtime = "experimental-edge";
 
@@ -52,14 +52,22 @@ export default function Home({
             </div>
           }
         >
-          <AllBlogsCard blogs={blogs.data} />
+          <AllBlogsCard blogs={blogs} />
         </Suspense>
       </main>
     </div>
   );
 }
 
-export const getServerSideProps = (async () => {
+export const getServerSideProps = async () => {
   const blogs = await getAllBlogs();
-  return { props: { blogs } };
-}) satisfies GetServerSideProps<{ blogs: { data: Blog[] } }>;
+  const filteredBlogs = blogs.data.map(
+    ({ id, content, created_at, title, imageUrl }) => ({
+      id,
+      content,
+      imageUrl,
+      created_at,
+    })
+  );
+  return { props: { blogs: filteredBlogs } };
+};

@@ -9,7 +9,6 @@ type Props = {};
 
 const Navbar = ({}: Props) => {
   const { user, login, isLoading } = useUser();
-  console.log(!isLoading && user?.user_metadata);
   return (
     <div>
       <header className="bg-white">

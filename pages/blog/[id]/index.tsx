@@ -43,19 +43,7 @@ const index = ({ blogData }: { blogData: BlogData }) => {
 
 export default index;
 
-export const getStaticPaths = async () => {
-  const blogs = await getAllBlogs();
-  return {
-    paths: blogs.data.map((blog) => ({
-      params: {
-        id: blog.id.toString(),
-      },
-    })),
-    fallback: false,
-  };
-};
-
-export const getStaticProps = async ({ params }) => {
+export const getServerSideProps = async ({ params }) => {
   const id = params.id;
   const { data } = await getBlogById(Number(id));
   return {
@@ -65,6 +53,5 @@ export const getStaticProps = async ({ params }) => {
         imageUrl: data?.imageUrl,
       },
     },
-    notFound: true,
   };
 };
