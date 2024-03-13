@@ -1,9 +1,6 @@
-import Link from "next/link";
-import { formatDate } from "../lib/utils";
-import { LayoutComponent } from "./ui/layout-comp";
-import BlogImage from "./BlogImage";
 import React from "react";
 import { Blog } from "../lib/supabaseClient/fetchBlog";
+import { SingleBlogCard } from "./SingleBlogCard";
 
 type Props = {
   blogs: Blog[];
@@ -18,21 +15,7 @@ const AllBlogsCard = ({ blogs }: Props) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto p-4">
       {blogs.map((blog) => (
-        <Link href={`/blog/${blog.id}`} passHref key={blog.id}>
-          <div className="rounded-xl group hover:shadow-xl transition-shadow duration-200 shadow-md p-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex flex-col justify-between">
-            <h3 className="font-bold text-lg text-gray-800 dark:text-gray-200 min-h-20">
-              {JSON.parse(blog.content || "{}").title}
-            </h3>
-            <div className="text-sm text-gray-500 mt-2">
-              {formatDate(blog.created_at)}
-            </div>
-            <div className="mt-4">
-              <LayoutComponent layoutId={`${JSON.parse(blog.content || "{}").title}-image`}>
-                <BlogImage imageUrl={blog.imageUrl} title={JSON.parse(blog.content || "{}").title} />
-              </LayoutComponent>
-            </div>
-          </div>
-        </Link>
+        <SingleBlogCard blog={blog} key={blog.id} />
       ))}
     </div>
   );
