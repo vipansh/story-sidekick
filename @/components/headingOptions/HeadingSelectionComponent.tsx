@@ -4,17 +4,17 @@ import Options from "./Options";
 
 type Props = {
   options: string[];
-  selectedOptions: string[];
-  setSelectedOptions: React.Dispatch<React.SetStateAction<string[]>>;
+  setChosenOptions: React.Dispatch<React.SetStateAction<string[]>>;
+  chosenOptions: string[];
 };
 
-const HeadingOptionsComp: React.FC<Props> = ({
+const HeadingSelectionComponent: React.FC<Props> = ({
   options,
-  setSelectedOptions,
-  selectedOptions,
+  setChosenOptions,
+  chosenOptions,
 }) => {
   const handleQuestionClick = (options: string[]) => {
-    setSelectedOptions(options);
+    setChosenOptions(options);
   };
 
   return (
@@ -28,7 +28,7 @@ const HeadingOptionsComp: React.FC<Props> = ({
           <Options
             options={options}
             onClick={handleQuestionClick}
-            selectedOptions={selectedOptions} // Removed unnecessary brackets
+            selectedOptions={chosenOptions}
           />
         </div>
       </div>
@@ -36,4 +36,4 @@ const HeadingOptionsComp: React.FC<Props> = ({
   );
 };
 
-export default HeadingOptionsComp;
+export default HeadingSelectionComponent;

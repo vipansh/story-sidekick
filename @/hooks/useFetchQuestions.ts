@@ -1,48 +1,35 @@
-import { useState } from "react";
-import { toast } from "sonner";
-import {
-  QuestionStructure,
-  exampleQuestionStructure,
-} from "../lib/requestToOpenAi/requestForHeadding/standerdRes";
+import { useState } from 'react';
+import axios from 'axios';
 
-// Define the hook
-const useFetchQuestions = () => {
-  const [loading, setLoading] = useState(false);
+interface HeadingStructure {
+  headingsOption: string[];
+}
 
-  const fetchQuestions = async (prompt: string) => {
-    // return exampleQuestionStructure
+const useQuestionRetrieval = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<unknown>(null);
 
-    if (!prompt) {
-      toast.error("Please enter a topic name.");
-      return;
-    }
-    setLoading(true);
+  const retrieveQuestions = async (prompt: string): Promise<HeadingStructure> => {
+    setIsLoading(true);
+    setError(null);
+
     try {
-      const response = await fetch("/api/request_for_question", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ prompt }),
-      });
-      console.log({ response });
-      if (!response.ok) {
-        throw new Error("Failed to fetch");
+      const response = await axios.post('/api/request-for-question', { prompt });
+
+      if (response.status !== 200) {
+        throw new Error('Failed to retrieve questions');
       }
-      const data = await response.json();
-      console.log({ data, test: "test" });
-      return data as QuestionStructure;
-    } catch (error) {
-      toast.error(
-        "An error occurred while processing your request. Please try again."
-      );
-      console.error("Error", error);
+
+      return response.data as HeadingStructure;
+    } catch (err) {
+      setError(err);
+      throw err;
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
-  return { fetchQuestions, loading };
+  return { retrieveQuestions, isLoading, error };
 };
 
-export default useFetchQuestions;
+export default useQuestionRetrieval;
