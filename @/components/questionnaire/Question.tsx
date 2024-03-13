@@ -1,15 +1,14 @@
 import { CheckIcon, CircleIcon } from "@radix-ui/react-icons";
 import React from "react";
 
-type Props = {
+type QuestionProps = {
   question: any;
-  onClick: (data: any) => void; // Changed {} to void
+  onClick: (data: any) => void;
   selectedOptions: string[];
 };
 
-const Question: React.FC<Props> = ({ question, onClick, selectedOptions }) => {
+const Question: React.FC<QuestionProps> = ({ question, onClick, selectedOptions }) => {
   const handleOptionClick = (option: string) => {
-    // Select only one option
     const updatedOptions = [option];
     // Update state or call the onClick function with updated data
     onClick({ ...question, options: updatedOptions });

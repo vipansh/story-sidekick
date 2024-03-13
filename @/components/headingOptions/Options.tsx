@@ -13,11 +13,6 @@ const Options: React.FC<Props> = ({ options, onClick, selectedOptions }) => {
   const { user } = useUser();
 
   const handleOptionClick = (option: string) => {
-    // if (!user?.user_metadata) {
-    //   toast.info("Log in to make chanegs");
-    //   return;
-    // }
-
     const updatedOptions = selectedOptions.includes(option)
       ? selectedOptions.filter((selectedOption) => selectedOption !== option)
       : [...selectedOptions, option];

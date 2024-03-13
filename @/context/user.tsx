@@ -2,6 +2,7 @@ import React from "react";
 import { createContext, useState, useEffect, useContext } from "react";
 import { useRouter } from "next/router";
 import { supabaseClient } from "../lib/supabase";
+import { UserMetadata } from "@supabase/supabase-js";
 
 type ContextValue = {
   user: User | null;
@@ -13,23 +14,12 @@ type ContextValue = {
 const UserContext = createContext<ContextValue>(null);
 
 export type User = {
-  user_metadata: {
-    avatar_url: string;
-    email: string;
-    email_verified: boolean;
-    full_name: string;
-    iss: string;
-    name: string;
-    phone_verified: boolean;
-    picture: string;
-    provider_id: string;
-    sub: string;
-  };
+  user_metadata: UserMetadata;
 };
 
 const UserProvider = ({ children }) => {
   const router = useRouter();
-  const [user, setUser] = useState<User | null | any>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -43,10 +33,7 @@ const UserProvider = ({ children }) => {
         //   .eq("id", sessionUser.user.id)
         //   .single();
 
-        setUser({
-          ...sessionUser.user,
-          // ...profile,
-        });
+        setUser(sessionUser.user);
       }
     };
     setIsLoading(true);

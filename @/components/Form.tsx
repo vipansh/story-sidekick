@@ -1,8 +1,9 @@
-import React from "react";
-import { useState, useRef, FormEvent } from "react";
+import React, { useState, useRef, FormEvent } from "react";
 import { toast } from "sonner";
-import { cn } from "../lib/utils";
 import useFetchQuestions from "../hooks/useFetchQuestions";
+import useCreateBlog from "../hooks/useCreateBlog";
+import { QuestionStructure } from "../lib/requestToOpenAi/requestForHeadding/standerdRes";
+import HeadingOptionsComp from "./headingOptions/HeadingOptionsComp";
 import {
   Card,
   CardContent,
@@ -16,9 +17,6 @@ import { Dialog, DialogContent, DialogFooter } from "./ui/dialog";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-import useCreateBlog from "../hooks/useCreateBlog";
-import { QuestionStructure } from "../lib/requestToOpenAi/requestForHeadding/standerdRes";
-import HeadingOptionsComp from "./headingOptions/HeadingOptionsComp";
 
 const Form = () => {
   const [loading, setLoading] = useState(false);
@@ -59,6 +57,7 @@ const Form = () => {
     action(fullPrompt);
     closeDialog();
   };
+
   return (
     <section className="mx-auto max-w-lg">
       <Card className="border-0 shadow-none">
@@ -79,7 +78,7 @@ const Form = () => {
             />
           </CardContent>
           <CardFooter className="flex justify-between">
-            <Button className={cn("w-full")} type="submit" disabled={loading}>
+            <Button className={"w-full"} type="submit" disabled={loading}>
               {loading ? "Generating..." : "Generate Blog Post"}
             </Button>
           </CardFooter>
