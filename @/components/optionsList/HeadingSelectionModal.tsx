@@ -52,6 +52,10 @@ const HeadingSelectionModal: React.FC<Props> = ({
     }
   };
 
+  const handleOptionSelection = (options: string[]) => {
+    setChosenHeadings(options);
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       {isGeneratingPost && <Loader message="Generating blog post..." />}
@@ -59,7 +63,7 @@ const HeadingSelectionModal: React.FC<Props> = ({
       <DialogContent className="py-4 w-5/6 mx-auto">
         <HeadingSelectionComponent
           options={chosenHeadings}
-          setChosenOptions={setChosenHeadings}
+          handleOptionSelection={handleOptionSelection}
           isLoading={isLoading}
         />
         <Button onClick={handleRefetch}>Refetch</Button>

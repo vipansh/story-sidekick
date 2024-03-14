@@ -4,19 +4,15 @@ import Options from "./Options";
 
 type Props = {
   options: string[];
-  setChosenOptions: React.Dispatch<React.SetStateAction<string[]>>;
+  handleOptionSelection: (options: string[]) => void;
   isLoading: boolean;
 };
 
 const HeadingSelectionComponent: React.FC<Props> = ({
   options,
-  setChosenOptions,
+  handleOptionSelection,
   isLoading,
 }) => {
-  const handleQuestionClick = (options: string[]) => {
-    setChosenOptions(options);
-  };
-
   return (
     <>
       <DialogHeader className="pt-4">
@@ -27,7 +23,7 @@ const HeadingSelectionComponent: React.FC<Props> = ({
         <div className="grid gap-4 py-1 flex-1">
           <Options
             options={options}
-            onClick={handleQuestionClick}
+            handleOptionSelection={handleOptionSelection}
             isLoading={isLoading}
           />
         </div>
