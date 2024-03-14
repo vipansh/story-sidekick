@@ -1,6 +1,6 @@
 import React from "react";
 
-const Loader = ({ message }: { message: string }) => {
+const Loader = ({ message }: { message?: string }) => {
   return (
     <div className="fixed inset-0 bg-opacity-75 bg-white dark:bg-gray-900 z-50 flex justify-center items-center">
       <div className="flex items-center flex-col justify-center space-y-3">
@@ -20,9 +20,11 @@ const Loader = ({ message }: { message: string }) => {
             fill="currentFill"
           />
         </svg>
-        <h3 className="text-lg font-medium text-gray-900 dark:text-white">
-          {message}
-        </h3>
+        {message && (
+          <h3 className="text-lg font-medium text-gray-900 dark:text-white">
+            {message}
+          </h3>
+        )}
       </div>
     </div>
   );

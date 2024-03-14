@@ -1,26 +1,27 @@
-import { CheckIcon, CircleIcon } from "@radix-ui/react-icons";
-import React from "react";
-import { toast } from "sonner";
+import React, { useEffect, useMemo, useState } from "react";
+
 import { useUser } from "../../context/user";
+import useRequestForOptionChange from "../../hooks/useRequestForOptionChange";
+import { motion } from "framer-motion";
 
 type Props = {
   options: string[];
   onClick: (option: string[]) => void;
-  selectedOptions: string[];
+  isLoading: boolean;
 };
 
-const Options: React.FC<Props> = ({ options, onClick, selectedOptions }) => {
+const Options: React.FC<Props> = ({ options, onClick, isLoading }) => {
   const { user } = useUser();
+  const { requestForOptionChange } = useRequestForOptionChange();
 
-  const handleOptionClick = (option: string) => {
-    const updatedOptions = selectedOptions.includes(option)
-      ? selectedOptions.filter((selectedOption) => selectedOption !== option)
-      : [...selectedOptions, option];
-    onClick(updatedOptions);
-  };
+  const [key, setKey] = useState(Math.random());
+
+  useEffect(() => {
+    isLoading && setKey(Math.random());
+  }, [isLoading]);
 
   return (
-    <div className="max-h-[60vh]">
+    <div className="max-h-[50vh]">
       <div className="mb-4">
         <div className="font-bold text-xl text-gray-700">
           Select the options you want to include in your blog
@@ -30,29 +31,59 @@ const Options: React.FC<Props> = ({ options, onClick, selectedOptions }) => {
         </div>
       </div>
       <div className="flex space-y-4 flex-col">
-        {options.map((option, index) => (
-          <div
-            key={index}
-            onClick={() => handleOptionClick(option)}
-            className={`py-2 hover:shadow-2xl vote-option px-4 border-2 border-gray-200 rounded-md shadow-md relative transition-all duration-500 bg-white cursor-pointer   ${
-              selectedOptions.includes(option) ? "border-violet-400 " : ""
-            }`}
-          >
-            <div className="flex items-center ">
-              <span className="flex items-center w-6 h-6 transition-all duration-200 rounded-full">
-                {selectedOptions?.includes(option) ? (
-                  <CheckIcon className="bg-violet-400 text-gray-50 rounded-md" />
-                ) : (
-                  <CircleIcon className="rounded-full" />
-                )}
-              </span>
-              <div>{option}</div>
-            </div>
-          </div>
-        ))}
+        <OptionList
+          allOptions={[...Array(8)]}
+          key={key}
+          options={options}
+          isLoading={isLoading}
+        />
       </div>
     </div>
   );
 };
-
 export default Options;
+
+const OptionList = ({ allOptions, options, isLoading }) => {
+  return allOptions.map((_, index) => (
+    <OptionsItem
+      key={index}
+      index={index}
+      isLoading={isLoading}
+      option={options[index]}
+    />
+  ));
+};
+const OptionsItem = ({ index, isLoading, option }) => {
+  return (
+    <motion.div
+      className={`hover:shadow-2xl vote-option border border-gray-200 rounded-md shadow-md relative transition-all duration-500 bg-white cursor-pointer p-2`}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.1, delay: index * 0.2 }}
+    >
+      <div className="flex items-center gap-2">
+        <div className="size-6 rounded bg-blue-50 text-center text-[10px]/6 font-bold">
+          {index + 1}
+        </div>
+        {isLoading ? (
+          <div className="w-full">
+            <div
+              style={{ width: `${Math.floor(Math.random() * 100)}%` }}
+              className={`ml-2 h-4 bg-gray-200 rounded-md animate-pulse`}
+            ></div>
+          </div>
+        ) : (
+          <motion.div
+            className={`relative transition-all duration-500 cursor-pointer`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+          >
+            {option}
+          </motion.div>
+        )}
+      </div>
+    </motion.div>
+  );
+};

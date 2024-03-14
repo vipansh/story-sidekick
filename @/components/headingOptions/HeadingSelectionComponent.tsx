@@ -5,13 +5,13 @@ import Options from "./Options";
 type Props = {
   options: string[];
   setChosenOptions: React.Dispatch<React.SetStateAction<string[]>>;
-  chosenOptions: string[];
+  isLoading: boolean;
 };
 
 const HeadingSelectionComponent: React.FC<Props> = ({
   options,
   setChosenOptions,
-  chosenOptions,
+  isLoading,
 }) => {
   const handleQuestionClick = (options: string[]) => {
     setChosenOptions(options);
@@ -28,7 +28,7 @@ const HeadingSelectionComponent: React.FC<Props> = ({
           <Options
             options={options}
             onClick={handleQuestionClick}
-            selectedOptions={chosenOptions}
+            isLoading={isLoading}
           />
         </div>
       </div>
