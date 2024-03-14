@@ -30,7 +30,7 @@ const Options: React.FC<Props> = ({ options, onClick, isLoading }) => {
           Please log in to make changes
         </div>
       </div>
-      <div className="flex space-y-4 flex-col">
+      <div className="flex space-y-4 flex-col pr-4">
         <OptionList
           allOptions={[...Array(8)]}
           key={key}
@@ -56,10 +56,11 @@ const OptionList = ({ allOptions, options, isLoading }) => {
 const OptionsItem = ({ index, isLoading, option }) => {
   return (
     <motion.div
-      className={`hover:shadow-2xl vote-option border border-gray-200 rounded-md shadow-md relative transition-all duration-500 bg-white cursor-pointer p-2`}
+      className={` border border-gray-50 rounded-md shadow relative bg-white cursor-pointer p-2`}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.1, delay: index * 0.2 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.09, delay: index * 0.1 }}
     >
       <div className="flex items-center gap-2">
         <div className="size-6 rounded bg-blue-50 text-center text-[10px]/6 font-bold">
@@ -74,11 +75,11 @@ const OptionsItem = ({ index, isLoading, option }) => {
           </div>
         ) : (
           <motion.div
-            className={`relative transition-all duration-500 cursor-pointer`}
+            className={`relative  cursor-pointer`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0, y: 20 }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.09, delay: index * 0.1 }}
           >
             {option}
           </motion.div>
