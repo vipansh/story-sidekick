@@ -47,23 +47,29 @@ export async function fetchOpenAICompletion(
     "Validate the response ✅",
     responseData.choices[0].message.content
   );
-  const parseResult: any = openAIResponseSchema.safeParse(
-    JSON.parse(responseData.choices[0].message.content)
-  );
-
-  if (parseResult.success) {
-    console.log("✅ Resonse is Validate", parseResult.data);
-    return parseResult.data;
-  } else {
-    console.error(
-      "❌ Validation failed, retrying with error details:",
-      parseResult.error
+  try {
+    const parseResult: any = openAIResponseSchema.safeParse(
+      JSON.parse(responseData?.choices?.[0]?.message?.content)
     );
-    return fetchOpenAICompletion(
-      openAIResponseSchema,
-      messages,
-      responseData.choices[0].message.content,
-      JSON.stringify(parseResult.error)
-    );
+    if (parseResult.success) {
+      console.log("✅ Resonse is Validate", parseResult.data);
+      return parseResult.data;
+    } else {
+      console.error(
+        "❌ Validation failed, retrying with error details:",
+        parseResult.error
+      );
+      return fetchOpenAICompletion(
+        openAIResponseSchema,
+        messages,
+        responseData.choices[0].message.content,
+        JSON.stringify(parseResult.error)
+      );
+    }
+  } catch (error) {
+    console.log("roor in json parse:", error)
+    throw new Error(error);
   }
+
+
 }

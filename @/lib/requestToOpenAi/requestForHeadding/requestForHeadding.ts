@@ -43,12 +43,13 @@ export async function requestForSingleOptionChange(prompt: string, option: strin
   `;
 
   try {
+    console.log("runnning fetch OpenAi")
     const response = await fetchOpenAICompletion(singleHeadingOptionSchema, [{ role: "user", content: message }]);
     // Extract the first heading option from the OpenAI response
     const newOption = response.headingsOption[0];
     return newOption;
   } catch (error) {
-    console.error("❌ Error fetching OpenAI completion:", error);
+    console.error("❌ Error fetching OpenAI completion:", error,);
     throw error;
   }
 }

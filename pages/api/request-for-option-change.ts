@@ -32,9 +32,9 @@ export default async function handleRequest(request: Request): Promise<Response>
             validateInputs(requestData);
             const { prompt, option } = requestData;
 
-            console.log("🌟 Generating question with OpenAI...");
+            console.log("🌟 Generating question with OpenAI(request-for-option-change)...");
             const generatedQuestion = await requestForSingleOptionChange(prompt, option);
-            console.log("🚀 Question generated successfully.");
+            console.log("🚀 Question generated successfully.", generatedQuestion);
 
             return new Response(JSON.stringify(generatedQuestion), {
                   status: 200,
