@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
 
-import { useUser } from "../../context/user";
-import useRequestForOptionChange from "../../hooks/useRequestForOptionChange";
 import { OptionsItem } from "./OptionsItem";
+import { AnimatePresence } from "framer-motion";
+import { Button } from "../ui/button";
 
 type OptionsProps = {
   options: string[];
@@ -15,17 +15,6 @@ const Options: React.FC<OptionsProps> = ({
   handleOptionSelection,
   isLoading,
 }) => {
-  //* INFO: this is done to trigger the animation on refetch
-  const [key, setKey] = useState(Math.random());
-  const [allOptions, setAllOptions] = useState([...Array(8)]);
-  useEffect(() => {
-    if (isLoading) {
-      setKey(Math.random());
-    } else {
-      setAllOptions(options);
-    }
-  }, [isLoading]);
-
   return (
     <div className="">
       <div className="mb-4">
@@ -36,10 +25,8 @@ const Options: React.FC<OptionsProps> = ({
           Please log in to make changes
         </div>
       </div>
-      <div className="flex space-y-4 flex-col pr-4 max-h-[50vh]">
+      <div className="flex space-y-4 flex-col pr-4 h-[50vh]">
         <OptionList
-          allOptions={allOptions}
-          key={key}
           options={options}
           isLoading={isLoading}
           handleOptionSelection={handleOptionSelection}
@@ -50,31 +37,43 @@ const Options: React.FC<OptionsProps> = ({
 };
 export default Options;
 
-const OptionList = ({
-  allOptions,
-  options,
-  isLoading,
-  handleOptionSelection,
-}) => {
+const OptionList: React.FC<{
+  options: string[];
+  isLoading: boolean;
+  handleOptionSelection: (options: string[]) => void;
+}> = ({ options, isLoading, handleOptionSelection }) => {
   const handleDelete = (index: number) => {
-    const newOptions = options.slice(0, index).concat(options.slice(index + 1));
+    const newOptions = options.filter((_, i) => i !== index);
     handleOptionSelection(newOptions);
   };
 
-  return allOptions.map((_, index: number) => (
-    <OptionsItem
-      key={index}
-      itemIndex={index}
-      isLoading={isLoading}
-      option={options[index]}
-      // handleRefetch={() => {
-      //   handleOptionSelection(
-      //     options.map((op, i) => (index === i ? "New " : op))
-      //   );
-      // }}
-      // handleDelete={() => {
-      //   handleDelete(index);
-      // }}
-    />
-  ));
+  const [allOption, setAllOption] = useState<string[]>([]);
+  useEffect(() => {
+    if (isLoading) {
+      setAllOption(Array(8).fill(""));
+    } else {
+      setAllOption(options);
+    }
+  }, [isLoading, options]);
+
+  return (
+    <AnimatePresence>
+      {allOption.map((_, index: number) => (
+        <OptionsItem
+          key={index}
+          itemIndex={index}
+          isLoading={isLoading}
+          option={options[index]}
+          handleDelete={() => {
+            handleDelete(index);
+          }}
+        />
+      ))}
+      {allOption.length < 8 && (
+        <div>
+          <Button>Add new </Button>
+        </div>
+      )}
+    </AnimatePresence>
+  );
 };

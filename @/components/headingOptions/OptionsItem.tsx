@@ -12,17 +12,18 @@ export const OptionsItem = ({
   itemIndex,
   isLoading,
   option,
+  handleDelete,
 }: {
   itemIndex: number;
   isLoading: boolean;
   option: string;
+  handleDelete: () => void;
 }) => {
   return (
     <motion.div
       className={` border border-gray-50 rounded-md shadow relative bg-white cursor-pointer p-2`}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
       transition={{ duration: 0.09, delay: itemIndex * 0.1 }}
     >
       <div className="flex items-center gap-2">
@@ -30,20 +31,22 @@ export const OptionsItem = ({
           {itemIndex + 1}
         </div>
         {isLoading ? (
-          <div className="w-full">
+          <motion.div
+            className="w-full"
+            transition={{ duration: 0.06, delay: itemIndex * 0.1 }}
+          >
             <div
               style={{ width: `${Math.floor(Math.random() * 50)}%` }}
               className={`ml-2 h-4 bg-gray-200 rounded-md animate-pulse`}
             ></div>
-          </div>
+          </motion.div>
         ) : (
           <div className="flex justify-between gap-2 flex-1">
             <motion.div
               className={`relative  cursor-pointer`}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.06, delay: itemIndex * 0.1 }}
+              transition={{ duration: 0.1, delay: itemIndex * 0.01 }}
             >
               {option}
             </motion.div>
@@ -62,7 +65,7 @@ export const OptionsItem = ({
               </TooltipProvider>
               <TooltipProvider>
                 <Tooltip>
-                  <TooltipTrigger>
+                  <TooltipTrigger onClick={handleDelete}>
                     <div className="size-6 rounded bg-red-50 text-center text-[10px]/6 font-bold flex items-center justify-center">
                       <Trash className="text-red-600 size-3" />
                     </div>

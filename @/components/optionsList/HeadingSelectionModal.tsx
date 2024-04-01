@@ -66,7 +66,7 @@ const HeadingSelectionModal: React.FC<Props> = ({
           handleOptionSelection={handleOptionSelection}
           isLoading={isLoading}
         />
-        <Button onClick={handleRefetch}>Refetch</Button>
+        <Button onClick={() => handleRefetch()}>Refetch</Button>
         <DialogFooter className="py-4 gap-2">
           {!user && (
             <Button variant="outline" onClick={login} className="ml-2">
