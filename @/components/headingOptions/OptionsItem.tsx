@@ -7,6 +7,9 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import useRequestForOptionChange from "../../hooks/useRequestForOptionChange";
 
 export const OptionsItem = ({
   itemIndex,
@@ -19,6 +22,34 @@ export const OptionsItem = ({
   option: string;
   handleDelete: () => void;
 }) => {
+  const [loading, setLoading] = useState(true);
+
+  const { requestForOptionChange } = useRequestForOptionChange();
+
+  useEffect(() => {
+    setLoading(isLoading);
+  }, [isLoading]);
+
+  const handleRefetch = async () => {
+    setLoading(true);
+    try {
+      const response = await requestForOptionChange(
+        "fix",
+        "INSERT_YOUR_OPTION_HERE"
+      );
+      // Handle the data as per your requirement
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+
+    setTimeout(() => {
+      setLoading(false);
+    }, 500);
+  };
+
   return (
     <motion.div
       className={` border border-gray-50 rounded-md shadow relative bg-white cursor-pointer p-2`}
@@ -30,7 +61,7 @@ export const OptionsItem = ({
         <div className="size-6 rounded bg-blue-50 text-center text-[10px]/6 font-bold">
           {itemIndex + 1}
         </div>
-        {isLoading ? (
+        {loading ? (
           <motion.div
             className="w-full"
             transition={{ duration: 0.06, delay: itemIndex * 0.1 }}
@@ -53,7 +84,7 @@ export const OptionsItem = ({
             <div className="flex justify-between gap-2">
               <TooltipProvider>
                 <Tooltip>
-                  <TooltipTrigger>
+                  <TooltipTrigger onClick={handleRefetch}>
                     <div className="size-6 rounded bg-blue-50 text-center text-[10px]/6 font-bold flex items-center justify-center">
                       <ArrowPath className="text-blue-600 size-3" />
                     </div>

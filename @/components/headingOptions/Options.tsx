@@ -47,6 +47,8 @@ const OptionList: React.FC<{
     handleOptionSelection(newOptions);
   };
 
+
+
   const [allOption, setAllOption] = useState<string[]>([]);
   useEffect(() => {
     if (isLoading) {
@@ -67,6 +69,7 @@ const OptionList: React.FC<{
           handleDelete={() => {
             handleDelete(index);
           }}
+         
         />
       ))}
       {allOption.length < 8 && (
