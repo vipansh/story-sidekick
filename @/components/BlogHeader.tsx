@@ -13,7 +13,7 @@ const BlogHeader = () => {
   return (
     <nav className="mb-6">
       <div
-        className="flex items-center space-x-3 text-blue-600 hover:text-blue-800"
+        className="flex items-center space-x-3 text-blue-600 hover:text-blue-800 cursor-pointer"
         onClick={handleBack}
       >
         <Back />
