@@ -38,7 +38,6 @@ const UserData = ({}: Props) => {
               My Account
               <Separator />
               {capitalizeFirstLetter(user?.user_metadata?.full_name)}
-            
             </LayoutComponent>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />

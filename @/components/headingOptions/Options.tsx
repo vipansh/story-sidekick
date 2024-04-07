@@ -42,14 +42,8 @@ const OptionList: React.FC<{
   isLoading: boolean;
   handleOptionSelection: (options: string[]) => void;
 }> = ({ options, isLoading, handleOptionSelection }) => {
-  const handleDelete = (index: number) => {
-    const newOptions = options.filter((_, i) => i !== index);
-    handleOptionSelection(newOptions);
-  };
-
-
-
   const [allOption, setAllOption] = useState<string[]>([]);
+
   useEffect(() => {
     if (isLoading) {
       setAllOption(Array(8).fill(""));
@@ -57,6 +51,11 @@ const OptionList: React.FC<{
       setAllOption(options);
     }
   }, [isLoading, options]);
+
+  const handleDelete = (index: number) => {
+    const newOptions = options.filter((_, i) => i !== index);
+    handleOptionSelection(newOptions);
+  };
 
   return (
     <AnimatePresence>
@@ -69,7 +68,6 @@ const OptionList: React.FC<{
           handleDelete={() => {
             handleDelete(index);
           }}
-         
         />
       ))}
       {allOption.length < 8 && (

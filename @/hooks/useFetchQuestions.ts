@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import axios from 'axios';
+import { useState } from "react";
+import axios from "axios";
 
 interface HeadingStructure {
   headingsOption: string[];
@@ -9,15 +9,19 @@ const useQuestionRetrieval = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<unknown>(null);
 
-  const retrieveQuestions = async (prompt: string): Promise<HeadingStructure> => {
+  const retrieveQuestions = async (
+    prompt: string
+  ): Promise<HeadingStructure> => {
     setIsLoading(true);
     setError(null);
 
     try {
-      const response = await axios.post('/api/request-for-question', { prompt });
+      const response = await axios.post("/api/request-for-question", {
+        prompt,
+      });
 
       if (response.status !== 200) {
-        throw new Error('Failed to retrieve questions');
+        throw new Error("Failed to retrieve questions");
       }
 
       return response.data as HeadingStructure;

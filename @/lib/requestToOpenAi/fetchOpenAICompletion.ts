@@ -39,14 +39,11 @@ export async function fetchOpenAICompletion(
       "Content-Type": "application/json",
       Authorization: `Bearer ${openAiKey}`,
     },
-    body: body,
+    body,
   });
 
   const responseData: any = await response.json();
-  console.log(
-    "Validate the response ✅",
-    responseData.choices[0].message.content
-  );
+  console.log("Validate the response ✅", responseData);
   try {
     const parseResult: any = openAIResponseSchema.safeParse(
       JSON.parse(responseData?.choices?.[0]?.message?.content)
@@ -67,9 +64,7 @@ export async function fetchOpenAICompletion(
       );
     }
   } catch (error) {
-    console.log("roor in json parse:", error)
+    console.log("roor in json parse:", error);
     throw new Error(error);
   }
-
-
 }

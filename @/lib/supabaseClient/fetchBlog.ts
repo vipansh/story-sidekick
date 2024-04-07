@@ -25,7 +25,6 @@ export const getAllBlogs = async () => {
   return allBlogs;
 };
 
-
 export type Blog = {
   id: string;
   content: string;

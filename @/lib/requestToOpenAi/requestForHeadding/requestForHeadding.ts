@@ -21,7 +21,7 @@ export async function requestForHeadding(prompt: string) {
       Example JSON structure: {
         headingsOption: ["heading 1", "heading 2", "heading 3"]
       }
-      Ensure that the headings provide a clear outline of the content to be covered in the blog post and are relevant to the given topic. Dont add number at the start`
+      Ensure that the headings provide a clear outline of the content to be covered in the blog post and are relevant to the given topic. Dont add number at the start`,
     },
   ];
 
@@ -35,22 +35,34 @@ export async function requestForHeadding(prompt: string) {
 
 export const singleHeadingOptionSchema = z.string();
 
-export async function requestForSingleOptionChange(prompt: string, option: string): Promise<string> {
-  const message = `
-    Given Topic: ${prompt}
-    Generate a new heading option for the blog post considering the provided topic and the specified option: "${option}".
-    This heading should provide additional insight into the blog post content.Max length of 35 words.
-  `;
+export async function requestForSingleOptionChange(
+  prompt: string,
+  option: string
+): Promise<string> {
+  const messages: MessagesType = [
+    {
+      role: "user",
+      content: `
+      Given Topic: ${prompt}
+      Generate a new heading option for the blog post considering the provided topic and the specified option: "${option}".
+      This heading should provide additional insight into the blog post content.Max length of 35 words.
+      Example JSON structure: "heddaing"
+    `,
+    },
+  ];
 
   try {
-    console.log("runnning fetch OpenAi")
-    const response = await fetchOpenAICompletion(singleHeadingOptionSchema, [{ role: "user", content: message }]);
+    console.log("runnning fetch OpenAi");
+    const response = await fetchOpenAICompletion(
+      openAIResponseSchema,
+      messages
+    );
     // Extract the first heading option from the OpenAI response
-    const newOption = response.headingsOption[0];
-    return newOption;
+    console.log({ response });
+    // const newOption = response.headingsOption[0];
+    return response;
   } catch (error) {
-    console.error("❌ Error fetching OpenAI completion:", error,);
+    console.error("❌ Error fetching OpenAI completion:", error);
     throw error;
   }
 }
-

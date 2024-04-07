@@ -7,7 +7,11 @@ type QuestionProps = {
   selectedOptions: string[];
 };
 
-const Question: React.FC<QuestionProps> = ({ question, onClick, selectedOptions }) => {
+const Question: React.FC<QuestionProps> = ({
+  question,
+  onClick,
+  selectedOptions,
+}) => {
   const handleOptionClick = (option: string) => {
     const updatedOptions = [option];
     // Update state or call the onClick function with updated data
