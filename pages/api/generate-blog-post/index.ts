@@ -23,7 +23,7 @@ function validateInputs(prompt: string): void {
 async function generateSegmindImage(prompt: string) {
   const url = "https://api.segmind.com/v1/ssd-1b";
   const data = {
-    prompt: `${prompt},typography, vibrant,  8k, volumetric light, cinematic,  uplight, no blur, 8k`,
+    prompt: `${prompt}`,
     negative_prompt: "scary, cartoon, painting,typography,nudity",
     samples: 1,
     scheduler: "UniPC",

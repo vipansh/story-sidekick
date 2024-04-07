@@ -23,7 +23,9 @@ export async function createOpenAICompletion(
   const messages: MessagesType = [
     {
       role: "user",
-      content: `Please generate a detailed response in a JSON format that adheres to our Zod schema. The response should consist of a JSON object with a 'content' field in markdown format. The content should be a comprehensive SEO-friendly blog post with a minimum of 1000 words. Ensure the post has a captivating title and engaging, informative content relevant to the topic. Utilize headings, bullet points, and concise paragraphs.Additionally, include imagePrompt as an LLM prompt to facilitate searching for topic-related images. Please provide a variety of descriptive and relevant image prompt to enhance the visual appeal and searchability of the blog post.
+      content: `Could you please craft a detailed JSON response that aligns with our Zod schema? The JSON object should feature a 'content' field formatted in markdown. This content needs to be an extensive and SEO-friendly blog post, spanning a minimum of 1000 words. It's essential that the post boasts a compelling title and delivers engaging, informative content relevant to the topic at hand. Be sure to use headings, bullet points, and concise paragraphs to enhance readability.
+
+      Additionally, don't forget to incorporate 'imagePrompt' as an LLM prompt. This will help in sourcing topic-related images. Aim to provide a diverse array of descriptive and relevant image prompts to enrich the visual appeal and improve the searchability of the blog post.
                   `,
     },
     {
