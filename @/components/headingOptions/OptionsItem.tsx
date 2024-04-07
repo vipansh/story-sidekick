@@ -47,10 +47,6 @@ export const OptionsItem = ({
     } finally {
       setLoading(false);
     }
-
-    setTimeout(() => {
-      setLoading(false);
-    }, 500);
   };
 
   return (
@@ -64,7 +60,7 @@ export const OptionsItem = ({
         <div className="size-6 rounded bg-blue-50 text-center text-[10px]/6 font-bold">
           {itemIndex + 1}
         </div>
-        {loading ? (
+        {loading || !option ? (
           <motion.div
             className="w-full"
             transition={{ duration: 0.06, delay: itemIndex * 0.1 }}

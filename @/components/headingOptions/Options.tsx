@@ -3,6 +3,7 @@ import React, { useEffect, useMemo, useState } from "react";
 
 import { Button } from "../ui/button";
 import { OptionsItem } from "./OptionsItem";
+import useRequestForOptionChange from "../../hooks/useRequestForOptionChange";
 
 type OptionsProps = {
   options: string[];
@@ -47,6 +48,7 @@ const OptionList: React.FC<{
   prompt: string;
 }> = ({ options, isLoading, handleOptionSelection, prompt }) => {
   const [allOption, setAllOption] = useState<string[]>([]);
+  const { requestForOptionChange } = useRequestForOptionChange();
 
   useEffect(() => {
     if (isLoading) {
@@ -68,6 +70,19 @@ const OptionList: React.FC<{
     handleOptionSelection(newOptions);
   };
 
+  const addNewOption = async () => {
+    try {
+      const response = await requestForOptionChange(prompt, "", true);
+      // Handle the data as per your requirement
+      console.log(response);
+      handleOptionSelection([...options, response.heading]);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      // setLoading(false);
+    }
+  };
+
   return (
     <AnimatePresence>
       {allOption.map((_, index: number) => (
@@ -85,7 +100,7 @@ const OptionList: React.FC<{
       ))}
       {allOption.length < 8 && (
         <div>
-          <Button>Add new </Button>
+          <Button onClick={addNewOption}>Add new </Button>
         </div>
       )}
     </AnimatePresence>

@@ -5,6 +5,7 @@ import { requestForSingleOptionChange } from "../../@/lib/requestToOpenAi/reques
 interface RequestData {
   prompt: string;
   option: string;
+  newOption?: boolean
 }
 
 
@@ -35,14 +36,15 @@ export default async function handleRequest(
   try {
     const requestData = (await request.json()) as RequestData;
     validateInputs(requestData);
-    const { prompt, option } = requestData;
+    const { prompt, option, newOption } = requestData;
 
     console.log(
       "🌟 Generating question with OpenAI(request-for-option-change)..."
     );
     const generatedQuestion = await requestForSingleOptionChange(
       prompt,
-      option
+      option,
+      newOption
     );
     console.log("🚀 Question generated successfully.", generatedQuestion);
 

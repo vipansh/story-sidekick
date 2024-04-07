@@ -47,17 +47,18 @@ const openAIResponseSchemaForSingleOption = z.object({
 
 export async function requestForSingleOptionChange(
   prompt: string,
-  option: string
+  option: string,
+  newOption?: boolean
 ): Promise<string> {
   const messages: MessagesType = [
     {
       role: "user",
       content: `
       Given Topic: ${prompt}
-      Generate a new heading option for the blog post considering the provided topic and the specified option: "${option}".
-      This heading should provide additional insight into the blog post content.Max length of 35 words.
-      Example JSON structure: {heading:"heading"}
-    `,
+      ${newOption ? "Generate a new heading option for the blog post" : `Generate a new heading option for the blog post considering the provided topic and the specified option: "${option}"`}
+      This heading should provide additional insight into the blog post content. Max length of 35 words.
+      Example JSON structure: { heading: "heading" }
+`,
     },
   ];
 

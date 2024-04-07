@@ -9,13 +9,14 @@ const useRequestForOptionChange = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const requestForOptionChange = async (prompt: string, option: string) => {
+  const requestForOptionChange = async (prompt: string, option: string, newOption?: boolean) => {
     setLoading(true);
     setError(null);
     try {
       const response = await axios.post("/api/request-for-option-change", {
         prompt,
         option,
+        newOption
       });
       if (response.status !== 200) {
         throw new Error("Failed to fetch");
