@@ -56,7 +56,7 @@ export async function requestForSingleOptionChange(
       content: `
       Given Topic: ${prompt}
       ${newOption ? "Generate a new heading option for the blog post" : `Generate a new heading option for the blog post considering the provided topic and the specified option: "${option}"`}
-      This heading should provide additional insight into the blog post content. Max length of 35 words.
+      This heading should provide additional insight into the blog post content. Max length of 15 words.
       Example JSON structure: { heading: "heading" }
 `,
     },

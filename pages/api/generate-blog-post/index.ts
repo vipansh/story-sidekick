@@ -23,8 +23,8 @@ function validateInputs(prompt: string): void {
 async function generateSegmindImage(prompt: string) {
   const url = "https://api.segmind.com/v1/ssd-1b";
   const data = {
-    prompt: `${prompt},typography, dark fantasy, wildlife photography, vibrant, cinematic and on a black background instagram, 8k, volumetric light, cinematic, octane render, uplight, no blur, 8k`,
-    negative_prompt: "scary, cartoon, painting",
+    prompt: `${prompt},typography, vibrant,  8k, volumetric light, cinematic,  uplight, no blur, 8k`,
+    negative_prompt: "scary, cartoon, painting,typography,nudity",
     samples: 1,
     scheduler: "UniPC",
     num_inference_steps: 25,
@@ -126,7 +126,7 @@ export default async function handler(request: Request): Promise<Response> {
 
     console.log("Generating image with Sigmind...");
     const imageBuffer = await generateSegmindImage(
-      blogContent.imageTags.join()
+      blogContent.imagePrompt
     );
     console.log("Image generated successfully.");
 
