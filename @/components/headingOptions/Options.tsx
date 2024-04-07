@@ -8,12 +8,14 @@ type OptionsProps = {
   options: string[];
   handleOptionSelection: (option: string[]) => void;
   isLoading: boolean;
+  prompt: string;
 };
 
 const Options: React.FC<OptionsProps> = ({
   options,
   handleOptionSelection,
   isLoading,
+  prompt,
 }) => {
   return (
     <div className="">
@@ -30,6 +32,7 @@ const Options: React.FC<OptionsProps> = ({
           options={options}
           isLoading={isLoading}
           handleOptionSelection={handleOptionSelection}
+          prompt={prompt}
         />
       </div>
     </div>
@@ -41,7 +44,8 @@ const OptionList: React.FC<{
   options: string[];
   isLoading: boolean;
   handleOptionSelection: (options: string[]) => void;
-}> = ({ options, isLoading, handleOptionSelection }) => {
+  prompt: string;
+}> = ({ options, isLoading, handleOptionSelection, prompt }) => {
   const [allOption, setAllOption] = useState<string[]>([]);
 
   useEffect(() => {
@@ -57,6 +61,13 @@ const OptionList: React.FC<{
     handleOptionSelection(newOptions);
   };
 
+  const updateOption = (newOption: string, index: number) => {
+    const newOptions = options.map((option, i) =>
+      i === index ? newOption : option
+    );
+    handleOptionSelection(newOptions);
+  };
+
   return (
     <AnimatePresence>
       {allOption.map((_, index: number) => (
@@ -68,6 +79,8 @@ const OptionList: React.FC<{
           handleDelete={() => {
             handleDelete(index);
           }}
+          updateOption={updateOption}
+          prompt={prompt}
         />
       ))}
       {allOption.length < 8 && (

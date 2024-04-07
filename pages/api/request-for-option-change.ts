@@ -7,6 +7,7 @@ interface RequestData {
   option: string;
 }
 
+
 const requestDataSchema = z.object({
   prompt: z.string(),
   option: z.string(),
@@ -20,6 +21,8 @@ function validateInputs(data: RequestData): void {
 }
 
 export const runtime = "edge";
+
+
 
 export default async function handleRequest(
   request: Request

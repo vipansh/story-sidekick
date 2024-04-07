@@ -7,12 +7,14 @@ type Props = {
   options: string[];
   handleOptionSelection: (options: string[]) => void;
   isLoading: boolean;
+  prompt: string;
 };
 
 const HeadingSelectionComponent: React.FC<Props> = ({
   options,
   handleOptionSelection,
   isLoading,
+  prompt,
 }) => {
   return (
     <>
@@ -26,6 +28,7 @@ const HeadingSelectionComponent: React.FC<Props> = ({
             options={options}
             handleOptionSelection={handleOptionSelection}
             isLoading={isLoading}
+            prompt={prompt}
           />
         </div>
       </div>

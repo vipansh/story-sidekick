@@ -5,9 +5,9 @@ import { useUser } from "../../context/user";
 import useQuestionRetrieval from "../../hooks/useFetchQuestions";
 import useGenerateBlogPost from "../../hooks/useGenerateBlogPost";
 import Loader from "../Loader";
-import HeadingSelectionComponent from "../headingOptions/HeadingSelectionComponent";
 import { Button } from "../ui/button";
 import { Dialog, DialogContent, DialogFooter } from "../ui/dialog";
+import HeadingSelectionComponent from "../headingOptions/HeadingSelectionComponent";
 
 type Props = {
   isOpen: boolean;
@@ -20,21 +20,19 @@ const HeadingSelectionModal: React.FC<Props> = ({
   onClose,
   topicInput,
 }) => {
-  const [chosenHeadings, setChosenHeadings] = useState([]);
-
+  const [chosenHeadings, setChosenHeadings] = useState<string[]>([]);
   const { user, login } = useUser();
   const { generateBlogPost, isLoading: isGeneratingPost } =
     useGenerateBlogPost();
-  const { retrieveQuestions, isLoading } = useQuestionRetrieval();
+  const { retrieveQuestions, isLoading: isFetchingQuestions } =
+    useQuestionRetrieval();
 
   useEffect(() => {
     handleRefetch();
   }, []);
 
   const handleCreateBlog = async () => {
-    const prompt = `${topicInput},
-      Markdown context for your blog post:
-      ${JSON.stringify(chosenHeadings)}`;
+    const prompt = `${topicInput}, Markdown context for your blog post: ${JSON.stringify(chosenHeadings)}`;
     try {
       const blogPost = await generateBlogPost(prompt);
       console.log(blogPost);
@@ -46,8 +44,8 @@ const HeadingSelectionModal: React.FC<Props> = ({
 
   const handleRefetch = async () => {
     try {
-      const retrievedHeadings = await retrieveQuestions(topicInput);
-      setChosenHeadings(retrievedHeadings.headingsOption);
+      const { headingsOption } = await retrieveQuestions(topicInput);
+      setChosenHeadings(headingsOption);
     } catch (error) {
       console.error("Error retrieving headings", error);
       toast.error("Failed to generate headings.");
@@ -65,9 +63,10 @@ const HeadingSelectionModal: React.FC<Props> = ({
         <HeadingSelectionComponent
           options={chosenHeadings}
           handleOptionSelection={handleOptionSelection}
-          isLoading={isLoading}
+          isLoading={isFetchingQuestions}
+          prompt={topicInput}
         />
-        <Button onClick={() => handleRefetch()}>Refetch</Button>
+        <Button onClick={handleRefetch}>Refetch</Button>
         <DialogFooter className="py-4 gap-2">
           {!user && (
             <Button variant="outline" onClick={login} className="ml-2">

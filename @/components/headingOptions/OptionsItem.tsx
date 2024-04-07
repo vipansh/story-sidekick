@@ -17,11 +17,15 @@ export const OptionsItem = ({
   isLoading,
   option,
   handleDelete,
+  updateOption,
+  prompt,
 }: {
   itemIndex: number;
   isLoading: boolean;
   option: string;
   handleDelete: () => void;
+  updateOption: (newOption: string, index: number) => void;
+  prompt: string;
 }) => {
   const [loading, setLoading] = useState(true);
 
@@ -34,12 +38,10 @@ export const OptionsItem = ({
   const handleRefetch = async () => {
     setLoading(true);
     try {
-      const response = await requestForOptionChange(
-        "fix",
-        "INSERT_YOUR_OPTION_HERE"
-      );
+      const response = await requestForOptionChange(prompt, option);
       // Handle the data as per your requirement
       console.log(response);
+      updateOption(response.heading, itemIndex);
     } catch (error) {
       console.error(error);
     } finally {
