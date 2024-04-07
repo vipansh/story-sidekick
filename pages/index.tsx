@@ -1,12 +1,12 @@
-import React from "react";
-import Head from "next/head";
-import styles from "../styles/Home.module.css";
-import AllBlogsCard from "../@/components/AllBlogsCard";
-import { getAllBlogs } from "../@/lib/supabaseClient/fetchBlog";
-
-import Navbar from "../@/components/navbar/Navbar";
 import { InferGetServerSidePropsType } from "next";
+import Head from "next/head";
+import React from "react";
+
+import AllBlogsCard from "../@/components/AllBlogsCard";
+import Navbar from "../@/components/navbar/Navbar";
 import BlogPostCreator from "../@/components/optionsList/BlogPostCreator";
+import { getAllBlogs } from "../@/lib/supabaseClient/fetchBlog";
+import styles from "../styles/Home.module.css";
 
 export const runtime = "experimental-edge";
 

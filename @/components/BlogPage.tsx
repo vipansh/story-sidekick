@@ -1,11 +1,12 @@
 import React from "react";
+import Markdown from "react-markdown";
+
+import { BlogData } from "../lib/supabaseClient/fetchBlog";
 import BlogCard from "./BlogCard";
 import BlogHeader from "./BlogHeader";
 import BlogImage from "./BlogImage";
 import { FloatingButton } from "./ui/floating-button";
 import { LayoutComponent } from "./ui/layout-comp";
-import Markdown from "react-markdown";
-import { BlogData } from "../lib/supabaseClient/fetchBlog";
 
 const BlogPage: React.FC<{ blogData: BlogData }> = ({ blogData }) => {
   if (!blogData?.content?.content) {

@@ -1,5 +1,6 @@
 // import OpenAI from "openai";
 import { decode } from "base64-arraybuffer";
+
 import { ApplicationError } from "../../../@/lib/error";
 import { createOpenAICompletion } from "../../../@/lib/requestToOpenAi/createBlog/createOpenAICompletion";
 import { supabaseClient } from "../../../@/lib/supabase";

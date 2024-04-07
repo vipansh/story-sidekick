@@ -1,8 +1,9 @@
-import React from "react";
 import { AppProps } from "next/app";
+import React from "react";
 import { Toaster } from "sonner";
-import "../styles/globals.css";
+
 import UserProvider from "../@/context/user";
+import "../styles/globals.css";
 
 //@ts-ignore
 global.performance = global.performance || {

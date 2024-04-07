@@ -1,4 +1,5 @@
 import React from "react";
+
 import { Blog } from "../lib/supabaseClient/fetchBlog";
 import { SingleBlogCard } from "./SingleBlogCard";
 

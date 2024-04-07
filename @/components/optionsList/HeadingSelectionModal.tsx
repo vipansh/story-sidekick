@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Dialog, DialogContent, DialogFooter } from "../ui/dialog";
+import { toast } from "sonner";
+
+import { useUser } from "../../context/user";
+import useQuestionRetrieval from "../../hooks/useFetchQuestions";
+import useGenerateBlogPost from "../../hooks/useGenerateBlogPost";
+import Loader from "../Loader";
 import HeadingSelectionComponent from "../headingOptions/HeadingSelectionComponent";
 import { Button } from "../ui/button";
-import { useUser } from "../../context/user";
-import Loader from "../Loader";
-import { toast } from "sonner";
-import useGenerateBlogPost from "../../hooks/useGenerateBlogPost";
-import useQuestionRetrieval from "../../hooks/useFetchQuestions";
+import { Dialog, DialogContent, DialogFooter } from "../ui/dialog";
+
 type Props = {
   isOpen: boolean;
   onClose: () => void;

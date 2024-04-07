@@ -1,14 +1,16 @@
 import React from "react";
+
+import { Button } from "../ui/button";
 import {
   DialogContent,
-  DialogHeader,
-  DialogTitle,
   DialogDescription,
   DialogFooter,
+  DialogHeader,
+  DialogTitle,
 } from "../ui/dialog";
-import { Button } from "../ui/button";
-import Question from "./Question"; // Make sure this path is correct
+// Make sure this path is correct
 import { Separator } from "../ui/separator";
+import Question from "./Question";
 
 type Props = {
   questionsList: any[];

@@ -1,4 +1,8 @@
+import axios from "axios";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+
+import useRequestForOptionChange from "../../hooks/useRequestForOptionChange";
 import ArrowPath from "../../svg/ArrowPath";
 import Trash from "../../svg/Trash";
 import {
@@ -7,9 +11,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import useRequestForOptionChange from "../../hooks/useRequestForOptionChange";
 
 export const OptionsItem = ({
   itemIndex,

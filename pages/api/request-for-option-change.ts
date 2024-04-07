@@ -1,11 +1,11 @@
+import { z } from "zod";
+
 import { requestForSingleOptionChange } from "../../@/lib/requestToOpenAi/requestForHeadding/requestForHeadding";
 
 interface RequestData {
   prompt: string;
   option: string;
 }
-
-import { z } from "zod";
 
 const requestDataSchema = z.object({
   prompt: z.string(),

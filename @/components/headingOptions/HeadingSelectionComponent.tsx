@@ -1,5 +1,6 @@
 import React from "react";
-import { DialogHeader, DialogTitle, DialogDescription } from "../ui/dialog";
+
+import { DialogDescription, DialogHeader, DialogTitle } from "../ui/dialog";
 import Options from "./Options";
 
 type Props = {

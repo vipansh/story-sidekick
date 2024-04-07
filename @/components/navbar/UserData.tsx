@@ -1,6 +1,8 @@
 import React from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+
 import { useUser } from "../../context/user";
+import { capitalizeFirstLetter } from "../../lib/utils";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,9 +11,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { Separator } from "../ui/separator";
-import { capitalizeFirstLetter } from "../../lib/utils";
 import { LayoutComponent } from "../ui/layout-comp";
+import { Separator } from "../ui/separator";
 
 type Props = {};
 

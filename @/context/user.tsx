@@ -1,8 +1,9 @@
-import React from "react";
-import { createContext, useState, useEffect, useContext } from "react";
-import { useRouter } from "next/router";
-import { supabaseClient } from "../lib/supabase";
 import { UserMetadata } from "@supabase/supabase-js";
+import { useRouter } from "next/router";
+import React from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+
+import { supabaseClient } from "../lib/supabase";
 
 type ContextValue = {
   user: User | null;

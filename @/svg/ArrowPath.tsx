@@ -1,6 +1,7 @@
 import React from "react";
-import { SvgProps } from "./type";
+
 import { cn } from "../lib/utils";
+import { SvgProps } from "./type";
 
 const ArrowPath = (props: SvgProps) => {
   return (

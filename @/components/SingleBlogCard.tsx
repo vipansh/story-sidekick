@@ -1,8 +1,9 @@
 import Link from "next/link";
+
 import { Blog } from "../lib/supabaseClient/fetchBlog";
-import { LayoutComponent } from "./ui/layout-comp";
-import BlogImage from "./BlogImage";
 import { formatDate } from "../lib/utils";
+import BlogImage from "./BlogImage";
+import { LayoutComponent } from "./ui/layout-comp";
 
 export const SingleBlogCard = ({ blog }: { blog: Blog }) => {
   return (

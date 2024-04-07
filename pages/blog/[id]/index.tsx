@@ -1,6 +1,7 @@
-import React from "react";
-import BlogPage from "../../../@/components/BlogPage";
 import Head from "next/head";
+import React from "react";
+
+import BlogPage from "../../../@/components/BlogPage";
 import { BlogData, getBlogById } from "../../../@/lib/supabaseClient/fetchBlog";
 
 export const runtime = "experimental-edge";

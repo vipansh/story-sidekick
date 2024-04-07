@@ -1,8 +1,8 @@
+import { AnimatePresence } from "framer-motion";
 import React, { useEffect, useMemo, useState } from "react";
 
-import { OptionsItem } from "./OptionsItem";
-import { AnimatePresence } from "framer-motion";
 import { Button } from "../ui/button";
+import { OptionsItem } from "./OptionsItem";
 
 type OptionsProps = {
   options: string[];

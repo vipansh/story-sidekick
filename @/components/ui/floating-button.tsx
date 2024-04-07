@@ -1,12 +1,13 @@
-import React, { useState } from "react";
 import {
-  motion,
   AnimatePresence,
-  useScroll,
+  motion,
   useMotionValueEvent,
+  useScroll,
 } from "framer-motion";
-import ArrowUp from "../../svg/ArrowUp";
+import React, { useState } from "react";
+
 import { cn } from "../../lib/utils";
+import ArrowUp from "../../svg/ArrowUp";
 import { Button } from "./button";
 
 export const FloatingButton = ({ className }: { className?: string }) => {
