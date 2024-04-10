@@ -24,7 +24,7 @@ const BlogPage: React.FC<{ blogData: BlogData }> = ({ blogData }) => {
           {content.title}
         </h1>
         <LayoutComponent layoutId={`${content.title}-image`}>
-          <BlogImage imageUrl={imageUrl} title={content.title} />
+          <BlogImage imageUrl={imageUrl} title={content.title} ratio={1} />
         </LayoutComponent>
         <article className="prose lg:prose-lg max-w-none mt-10">
           <Markdown>{content.content}</Markdown>

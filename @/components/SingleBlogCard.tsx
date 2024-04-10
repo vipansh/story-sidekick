@@ -22,6 +22,7 @@ export const SingleBlogCard = ({ blog }: { blog: Blog }) => {
             <BlogImage
               imageUrl={blog.imageUrl}
               title={JSON.parse(blog.content || "{}").title}
+              ratio={1}
             />
           </LayoutComponent>
         </div>
