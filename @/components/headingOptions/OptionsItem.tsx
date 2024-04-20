@@ -63,7 +63,7 @@ export const OptionsItem = ({
         {loading || !option ? (
           <motion.div
             className="w-full"
-            transition={{ duration: 0.06, delay: itemIndex * 0.1 }}
+            transition={{ duration: 0.09, delay: itemIndex * 0.3 }}
           >
             <div
               style={{ width: `${Math.floor(Math.random() * 50)}%` }}
@@ -76,7 +76,7 @@ export const OptionsItem = ({
               className={`relative  cursor-pointer`}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.1, delay: itemIndex * 0.01 }}
+              transition={{ duration: 0.1, delay: itemIndex * 0.1 }}
             >
               {option}
             </motion.div>

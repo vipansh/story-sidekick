@@ -1,9 +1,9 @@
 import { AnimatePresence } from "framer-motion";
 import React, { useEffect, useMemo, useState } from "react";
 
+import useRequestForOptionChange from "../../hooks/useRequestForOptionChange";
 import { Button } from "../ui/button";
 import { OptionsItem } from "./OptionsItem";
-import useRequestForOptionChange from "../../hooks/useRequestForOptionChange";
 
 type OptionsProps = {
   options: string[];
@@ -71,6 +71,7 @@ const OptionList: React.FC<{
   };
 
   const addNewOption = async () => {
+    handleOptionSelection([...options, ""]);
     try {
       const response = await requestForOptionChange(prompt, "", true);
       // Handle the data as per your requirement
@@ -89,7 +90,7 @@ const OptionList: React.FC<{
         <OptionsItem
           key={index}
           itemIndex={index}
-          isLoading={isLoading}
+          isLoading={isLoading || options[index] === ""}
           option={options[index]}
           handleDelete={() => {
             handleDelete(index);
