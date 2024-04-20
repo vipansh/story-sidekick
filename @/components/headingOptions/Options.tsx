@@ -22,7 +22,7 @@ const Options: React.FC<OptionsProps> = ({
     <div className="">
       <div className="mb-4">
         <div className="font-bold text-xl text-gray-700">
-          Select the options you want to include in your blog
+          Make an outline for your blog
         </div>
         <div className="font-light text-xs text-gray-700">
           Please log in to make changes
