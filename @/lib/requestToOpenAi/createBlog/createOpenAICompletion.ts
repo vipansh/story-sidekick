@@ -9,7 +9,7 @@ const openAIResponseSchema = z.object({
   content: z.string(),
   imagePrompt: z.string(),
 });
-const openAIMarkdownResponseSchema = z.string();
+
 export type OpenAIResponse = {
   title: string;
   content: string;
@@ -25,8 +25,8 @@ export async function createOpenAICompletion(
       role: "user",
       content: `Could you please craft a detailed JSON response that aligns with our Zod schema? The JSON object should feature a 'content' field formatted in markdown. This content needs to be an extensive and SEO-friendly blog post, spanning a minimum of 1000 words. It's essential that the post boasts a compelling title and delivers engaging, informative content relevant to the topic at hand. Be sure to use headings, bullet points, and concise paragraphs to enhance readability.
 
-      Additionally, don't forget to incorporate 'imagePrompt' as an LLM prompt. This will help in sourcing topic-related images. Aim to provide a diverse array of descriptive and relevant image prompts to enrich the visual appeal and improve the searchability of the blog post.
-                  `,
+      Additionally, don't forget to incorporate 'imagePrompt' as an LLM prompt as another Key. This will help in sourcing topic-related images. Aim to provide a diverse array of descriptive and relevant image prompts to enrich the visual appeal and improve the searchability of the blog post.
+      so your json will contain title: z.string(),content: z.string(),imagePrompt: z.string()`,
     },
     {
       role: "system",
