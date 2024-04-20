@@ -1,5 +1,5 @@
-import axios from "axios";
 import { useState } from "react";
+import { requestForQuestion as requestForQuestionApi } from "../apis";
 
 interface HeadingStructure {
   headingsOption: string[];
@@ -16,9 +16,9 @@ const useQuestionRetrieval = () => {
     setError(null);
 
     try {
-      const response = await axios.post("/api/request-for-question", {
+      const response = await requestForQuestionApi(
         prompt,
-      });
+      );
 
       if (response.status !== 200) {
         throw new Error("Failed to retrieve questions");

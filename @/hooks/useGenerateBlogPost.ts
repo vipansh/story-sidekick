@@ -1,7 +1,7 @@
-import axios from "axios";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { toast } from "sonner";
+import { generateBlogPost as generateBlogPostApi } from "../apis";
 
 const useGenerateBlogPost = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -14,7 +14,7 @@ const useGenerateBlogPost = () => {
     }
     setIsLoading(true);
     try {
-      const response = await axios.post("/api/generate-blog-post", { prompt });
+      const response = await generateBlogPostApi(prompt);
       if (response.status !== 200) {
         throw new Error("Failed to fetch");
       }

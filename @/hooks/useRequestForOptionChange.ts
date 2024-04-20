@@ -1,10 +1,8 @@
-import axios from "axios";
 import { useState } from "react";
+import { requestForOptionChange as requestForOptionChangeApi } from "../apis";
 
 
-export interface RequestForOptionChangeResponseData {
-  heading: string
-}
+
 const useRequestForOptionChange = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -13,7 +11,7 @@ const useRequestForOptionChange = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.post("/api/request-for-option-change", {
+      const response = await requestForOptionChangeApi({
         prompt,
         option,
         newOption
@@ -21,7 +19,7 @@ const useRequestForOptionChange = () => {
       if (response.status !== 200) {
         throw new Error("Failed to fetch");
       }
-      return response.data as RequestForOptionChangeResponseData;
+      return response.data
     } catch (error) {
       setError(error);
     } finally {
