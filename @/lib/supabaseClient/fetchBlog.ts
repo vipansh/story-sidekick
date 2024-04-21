@@ -26,8 +26,11 @@ export const getAllBlogs = async () => {
 };
 
 export type Blog = {
-  id: string;
+  id: bigint;
   content: string;
   createdAt: string;
   imageUrl: string;
+  avatarUrl: string;
+  email: string;
+  userId: string;
 };

@@ -3,30 +3,46 @@ import Link from "next/link";
 import { Blog } from "../lib/supabaseClient/fetchBlog";
 import { formatDate } from "../lib/utils";
 import BlogImage from "./BlogImage";
+import { Avatar, AvatarImage } from "./ui/avatar";
 import { LayoutComponent } from "./ui/layout-comp";
 
 export const SingleBlogCard = ({ blog }: { blog: Blog }) => {
   return (
-    <Link href={`/blog/${blog.id}`} passHref>
-      <div className="rounded-xl group hover:shadow-xl transition-shadow duration-200 shadow-md p-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex flex-col justify-between">
-        <h3 className="font-bold text-lg text-gray-800 dark:text-gray-200 min-h-20">
-          {JSON.parse(blog.content || "{}").title}
-        </h3>
-        <div className="text-sm text-gray-500 mt-2">
-          {formatDate(blog.createdAt)}
+    <div className="bg-white rounded-lg shadow-md overflow-hidden dark:bg-gray-950">
+      <Link href={`/blog/${blog.id}`} passHref>
+        <LayoutComponent
+          layoutId={`${JSON.parse(blog.content || "{}").title}-image`}
+        >
+          <BlogImage
+            imageUrl={blog.imageUrl}
+            title={JSON.parse(blog.content || "{}").title}
+            ratio={2}
+          />
+        </LayoutComponent>
+        <div className="p-6">
+          <div className="flex items-center mb-4">
+            <Avatar>
+              <AvatarImage
+                src={blog?.avatarUrl || "https://github.com/shadcn.png"}
+              />
+            </Avatar>
+            <div className="ml-3">
+              <div className="font-medium">{blog.email}</div>
+              <div className="text-sm text-gray-500 dark:text-gray-400">
+                {formatDate(blog.createdAt)}
+              </div>
+            </div>
+          </div>
+          <Link className="block" href="#">
+            <h3 className="text-xl font-bold mb-2 hover:underline">
+              {JSON.parse(blog.content || "{}").title}
+            </h3>
+          </Link>
+          <p className="text-gray-500 dark:text-gray-400 line-clamp-3">
+            {JSON.parse(blog.content || "{}").content.slice(0, 150)}...
+          </p>
         </div>
-        <div className="mt-4">
-          <LayoutComponent
-            layoutId={`${JSON.parse(blog.content || "{}").title}-image`}
-          >
-            <BlogImage
-              imageUrl={blog.imageUrl}
-              title={JSON.parse(blog.content || "{}").title}
-              ratio={1}
-            />
-          </LayoutComponent>
-        </div>
-      </div>
-    </Link>
+      </Link>
+    </div>
   );
 };

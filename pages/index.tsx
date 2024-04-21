@@ -42,11 +42,9 @@ const Home = ({
 
 export const getServerSideProps = async () => {
   const { data: blogs } = await getAllBlogs();
-  const filteredBlogs = blogs.map(({ id, content, created_at, imageUrl }) => ({
-    id,
-    content,
-    imageUrl,
+  const filteredBlogs = blogs.map(({ created_at, ...rest }) => ({
     createdAt: created_at,
+    ...rest,
   }));
   return { props: { blogs: filteredBlogs } };
 };
