@@ -33,6 +33,8 @@ export default async function handleRequest(
     return new Response("Method Not Allowed", { status: 405 });
   }
 
+
+
   try {
     const requestData = (await request.json()) as RequestData;
     validateInputs(requestData);
@@ -44,7 +46,7 @@ export default async function handleRequest(
     const generatedQuestion = await requestForSingleOptionChange(
       prompt,
       option,
-      newOption
+      newOption,
     );
     console.log("🚀 Question generated successfully.", generatedQuestion);
 

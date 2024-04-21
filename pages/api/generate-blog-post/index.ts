@@ -4,6 +4,8 @@ import { decode } from "base64-arraybuffer";
 import { ApplicationError } from "../../../@/lib/error";
 import { createOpenAICompletion } from "../../../@/lib/requestToOpenAi/createBlog/createOpenAICompletion";
 import { supabaseClient } from "../../../@/lib/supabase";
+import { authenticateWithCookies } from "../../../@/lib/authenticateWithCookies";
+import { User } from "@supabase/supabase-js";
 
 export const runtime = "edge";
 
@@ -80,9 +82,13 @@ async function uploadImageToSupabase(imageBuffer: any): Promise<string> {
 async function createBlogPostInSupabase(
   prompt: string,
   blogContent: string,
-  imagePath: string
+  imagePath: string,
+  user?: User
 ): Promise<{ id: number }> {
   const imageUrl = `${projectId}/storage/v1/object/public/images/${imagePath}`;
+  const avatarUrl = user?.user_metadata?.avatar_url
+  const email = user?.email
+  const userId = user?.id
 
   const { data, error } = await supabaseClient
     .from("blogs")
@@ -91,7 +97,9 @@ async function createBlogPostInSupabase(
         title: prompt,
         content: blogContent,
         imageUrl: imageUrl,
-        userId: "123",
+        userId: userId,
+        avatarUrl,
+        email
       },
     ])
     .select();
@@ -120,6 +128,7 @@ export default async function handler(request: Request): Promise<Response> {
 
     validateInputs(prompt);
 
+
     console.log("Generating blog content with OpenAI...");
     const blogContent = await createOpenAICompletion(prompt);
     console.log("Blog content generated successfully.", blogContent);
@@ -134,10 +143,12 @@ export default async function handler(request: Request): Promise<Response> {
     const imagePath = await uploadImageToSupabase(imageBuffer);
     console.log("Image uploaded successfully. Path:", imagePath);
 
+    const user = await authenticateWithCookies(request)
     const blogData = await createBlogPostInSupabase(
       prompt,
       JSON.stringify(blogContent),
-      imagePath
+      imagePath,
+      user
     );
 
     return new Response(JSON.stringify({ blogId: blogData.id }), {
