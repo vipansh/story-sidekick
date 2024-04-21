@@ -33,11 +33,11 @@ export const SingleBlogCard = ({ blog }: { blog: Blog }) => {
               </div>
             </div>
           </div>
-          <Link className="block" href="#">
+          <div className="block">
             <h3 className="text-xl font-bold mb-2 hover:underline">
               {JSON.parse(blog.content || "{}").title}
             </h3>
-          </Link>
+          </div>
           <p className="text-gray-500 dark:text-gray-400 line-clamp-3">
             {JSON.parse(blog.content || "{}").content.slice(0, 150)}...
           </p>

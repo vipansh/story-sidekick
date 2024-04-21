@@ -44,8 +44,9 @@ export async function getServerSideProps({ params }) {
   const { id } = params;
   const { data } = await getBlogById(Number(id));
   const blogData = {
+    ...data,
     content: JSON.parse(data?.content || "{}"),
-    imageUrl: data?.imageUrl,
+    createdAt: data.created_at,
   };
 
   return { props: { blogData } };

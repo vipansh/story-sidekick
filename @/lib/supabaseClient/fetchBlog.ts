@@ -1,11 +1,10 @@
 import { supabaseClient } from "../supabase";
 
-export interface BlogData {
+export interface BlogData extends Omit<Blog, 'content'> {
   content: {
     title: string;
     content: string;
   };
-  imageUrl: string;
 }
 
 export const getBlogById = async (id: number) => {
