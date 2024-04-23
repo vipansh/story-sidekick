@@ -32,4 +32,5 @@ export type Blog = {
   avatarUrl: string;
   email: string;
   userId: string;
+  userName: string
 };

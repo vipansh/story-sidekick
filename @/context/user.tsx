@@ -1,4 +1,4 @@
-import { UserMetadata } from "@supabase/supabase-js";
+import { User } from "@supabase/supabase-js";
 import { useRouter } from "next/router";
 import React from "react";
 import { createContext, useContext, useEffect, useState } from "react";
@@ -13,10 +13,6 @@ type ContextValue = {
 };
 
 const UserContext = createContext<ContextValue>(null);
-
-export type User = {
-  user_metadata: UserMetadata;
-};
 
 const UserProvider = ({ children }) => {
   const router = useRouter();

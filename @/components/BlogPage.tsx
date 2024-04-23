@@ -2,6 +2,7 @@ import { Pencil1Icon } from "@radix-ui/react-icons";
 import React from "react";
 import Markdown from "react-markdown";
 
+import { useUser } from "../context/user";
 import { BlogData } from "../lib/supabaseClient/fetchBlog";
 import { formatDate } from "../lib/utils";
 import BlogCard from "./BlogCard";
@@ -18,7 +19,7 @@ const BlogPage: React.FC<{ blogData: BlogData }> = ({ blogData }) => {
   }
 
   const { content, imageUrl } = blogData;
-
+  const { user } = useUser();
   return (
     <BlogCard>
       <BlogHeader />
@@ -42,18 +43,20 @@ const BlogPage: React.FC<{ blogData: BlogData }> = ({ blogData }) => {
                   />
                 </Avatar>
                 <div className="ml-3">
-                  <div className="font-medium">{blogData.email}</div>
+                  <div className="font-medium">{blogData?.userName}</div>
                   <div className="text-sm text-gray-500 dark:text-gray-400">
                     {formatDate(blogData.createdAt)}
                   </div>
                 </div>
               </div>
-              <div className="flex items-center gap-2">
-                <Button size="sm" variant="outline">
-                  <Pencil1Icon className="w-4 h-4 mr-2" />
-                  Edit
-                </Button>
-              </div>
+              {user?.id === String(blogData?.id) && (
+                <div className="flex items-center gap-2">
+                  <Button size="sm" variant="outline">
+                    <Pencil1Icon className="w-4 h-4 mr-2" />
+                    Edit(Comming Soon)
+                  </Button>
+                </div>
+              )}
             </div>
             <Markdown>{content.content}</Markdown>
           </div>

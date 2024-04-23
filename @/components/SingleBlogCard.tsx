@@ -27,7 +27,7 @@ export const SingleBlogCard = ({ blog }: { blog: Blog }) => {
               />
             </Avatar>
             <div className="ml-3">
-              <div className="font-medium">{blog.email}</div>
+              <div className="font-medium">{blog.userName}</div>
               <div className="text-sm text-gray-500 dark:text-gray-400">
                 {formatDate(blog.createdAt)}
               </div>

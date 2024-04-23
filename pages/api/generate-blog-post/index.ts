@@ -89,6 +89,7 @@ async function createBlogPostInSupabase(
   const avatarUrl = user?.user_metadata?.avatar_url
   const email = user?.email
   const userId = user?.id
+  const userName = user?.user_metadata?.full_name
 
   const { data, error } = await supabaseClient
     .from("blogs")
@@ -99,7 +100,8 @@ async function createBlogPostInSupabase(
         imageUrl: imageUrl,
         userId: userId,
         avatarUrl,
-        email
+        email,
+        userName
       },
     ])
     .select();
