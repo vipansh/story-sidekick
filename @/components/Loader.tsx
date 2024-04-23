@@ -18,7 +18,7 @@ const Loader = ({
           viewBox="0 0 15 16"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className={cn(className)}
+          className={cn("animate-spin", className)}
         >
           <path
             d="M7.5 1.5V3.16667M7.5 12V14.6667M3.33333 8H1M13.6667 8H12.6667M11.8047 12.3047L11.3333 11.8333M11.9428 3.61052L11 4.55333M2.78105 12.719L4.66667 10.8333M2.91912 3.47245L4.33333 4.88667"

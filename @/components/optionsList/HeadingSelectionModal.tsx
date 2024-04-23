@@ -5,9 +5,9 @@ import { useUser } from "../../context/user";
 import useQuestionRetrieval from "../../hooks/useFetchQuestions";
 import useGenerateBlogPost from "../../hooks/useGenerateBlogPost";
 import Loader from "../Loader";
+import HeadingSelectionComponent from "../headingOptions/HeadingSelectionComponent";
 import { Button } from "../ui/button";
 import { Dialog, DialogContent, DialogFooter } from "../ui/dialog";
-import HeadingSelectionComponent from "../headingOptions/HeadingSelectionComponent";
 
 type Props = {
   isOpen: boolean;
@@ -66,10 +66,12 @@ const HeadingSelectionModal: React.FC<Props> = ({
           isLoading={isFetchingQuestions}
           prompt={topicInput}
         />
-        <Button onClick={handleRefetch}>Refetch</Button>
+        <Button onClick={handleRefetch} variant="ghost">
+          Retrieve New Headings
+        </Button>
         <DialogFooter className="py-4 gap-2">
           {!user && (
-            <Button variant="outline" onClick={login} className="ml-2">
+            <Button variant="secondary" onClick={login} className="ml-2">
               Login to save blog by your name
             </Button>
           )}
